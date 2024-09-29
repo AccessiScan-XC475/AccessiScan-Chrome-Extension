@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "AccessiScan Chrome Extension",
+  "description": "Scan your local projects and see its AccessiScore.",
+  "version": "1.0",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "permissions": ["activeTab", "scripting"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["script.js"]
+    }
+  ]
+}
