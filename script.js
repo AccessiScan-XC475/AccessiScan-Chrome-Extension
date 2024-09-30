@@ -27,7 +27,7 @@ document.getElementById('captureDom').addEventListener('click', () => {
           }
 
           // Send the DOM to an API endpoint
-          fetch('http://localhost:4020/api/scan', {
+          fetch('http://localhost:4200/api/scan', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
