@@ -1,24 +1,42 @@
 <html>
   <head>
-    <!-- Use Material Design Lite CSS -->
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-  </head> 
+    <!-- Ant Design CSS CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.23.5/antd.min.css">
+    <style>
+      /* Set the dimensions of the popup */
+      html, body {
+        width: 400px;   /* Adjust width to desired size */
+        height: 600px;  /* Adjust height to desired size */
+        margin: 0;
+        padding: 0;
+        overflow: hidden; /* Prevents scrollbars */
+      }
+      /* Style to position and center the button at the bottom */
+      #captureDom {
+        position: fixed;
+        bottom: 20px; 
+        left: 50%;     
+        transform: translateX(-50%);  
+        margin: 0;    
+        z-index: 100; 
+      }
+    </style>
+  </head>
   <body style="background-color: #90D8B2;">
     <main> 
       <h1>AccessiScan</h1>
-      <div style="display: flex; margin: 0.25rem; height: 30px; align-items: center;">
-        <button id="captureDom" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-        <p id="score-display" style="visibility: hidden; padding: 0.1rem; margin: 0.2rem;">
-          <span id="score"></span>/100
-        </p>
-      </div>
       <select id="accessibility-selection">
         <option></option>
         <option>Visual</option>
         <option>Audio</option>
         <option>Mobility</option>
       </select>
+      <div style="display: flex; margin: 0.25rem; height: 30px; align-items: center;">
+        <button id="captureDom" class="ant-btn ant-btn-primary">Scan</button>
+        <p id="score-display" style="visibility: hidden; padding: 0.1rem; margin: 0.2rem;">
+          <span id="score"></span>/100
+        </p>
+      </div>
     </main>
     <script src="script.js"></script>
   </body>
