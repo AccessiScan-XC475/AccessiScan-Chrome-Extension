@@ -42,7 +42,6 @@ function hideOtherMessage() {
 }
 
 document.getElementById('captureDom').addEventListener('click', () => {
-  const selection = document.getElementById("accessibility-selection").value;
 
   // Get the active tab
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
