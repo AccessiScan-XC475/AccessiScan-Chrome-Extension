@@ -30,8 +30,32 @@
       /* Centering selection buttons */
       #selection-buttons {
         display: flex;
+        flex-wrap: wrap;
         justify-content: center; 
         margin-top: 20px; 
+        min-width: 150px;
+        padding: 10px;
+      }
+
+      /* Selection button styling */
+      .selection-button {
+        margin: 0.25rem;
+        flex: 1 0 auto;
+        border-color: #9b8bf4 ;
+      }
+
+      /* Hover color for selection buttons */
+      .selection-button:hover {
+        background-color: #8b95f6 ;
+        color: white; 
+        border-color: #9b8bf4 ;
+      }
+
+      /* Selected state for selection buttons */
+      .selection-button.selected {
+        background-color: #8b95f6; 
+        color: white; 
+        border-color: #9b8bf4; 
       }
 
       /* Styling for scan button */
@@ -52,26 +76,6 @@
         color: white; 
         border-color: #9b8bf4 ;
       }
-      /* Selection button styling */
-      .selection-button {
-        margin: 0.25rem;
-        width: 100px;
-        border-color: #9b8bf4 ;
-      }
-
-      /* Hover color for selection buttons */
-      .selection-button:hover {
-        background-color: #8b95f6 ;
-        color: white; 
-        border-color: #9b8bf4 ;
-      }
-
-      /* Selected state for selection buttons */
-      .selection-button.selected {
-        background-color: #8b95f6; 
-        color: white; 
-        border-color: #9b8bf4; 
-      }
 
       h1, h2, h3 {
         font-family: 'Poppins', sans-serif; 
@@ -86,10 +90,14 @@
       <h3>I want my project to be accessible for users who need: </h3>
       <!-- Selection Buttons -->
       <div id="selection-buttons">
-        <button class="ant-btn selection-button" id="visual-button">Visual</button>
-        <button class="ant-btn selection-button" id="audio-button">Audio</button>
-        <button class="ant-btn selection-button" id="mobility-button">Mobility</button>
+        <button class="ant-btn selection-button" id="contrasting-colors-button">Contrasting Colors</button>
+        <button class="ant-btn selection-button" id="large-text-button">Large Text</button>
+        <button class="ant-btn selection-button" id="labeled-images-button">Labeled Images</button>
+        <button class="ant-btn selection-button" id="other-button-1">Other</button>
+        <button class="ant-btn selection-button" id="other-button-2">Other</button>
+        <button class="ant-btn selection-button" id="other-button-3">Other</button>
       </div>
+      <p id="other-message" style="display: none; text-align: center;">Will be implemented later</p>
       <div style="display: flex; margin: 0.25rem; height: 30px; align-items: center;">
         <button id="captureDom" class="ant-btn ant-btn-primary">Scan</button>
         <p id="score-display" style="visibility: hidden; padding: 0.1rem; margin: 0.2rem;">

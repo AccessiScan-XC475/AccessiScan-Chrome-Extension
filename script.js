@@ -1,18 +1,45 @@
 let selection = "";
 
 // Adding event listeners to the option buttons
-document.getElementById('visual-button').addEventListener('click', () => {
-  selection = "Visual";
-  updateButtonState('visual-button');
+document.getElementById('contrasting-colors-button').addEventListener('click', () => {
+  selection = "Contrasting Colors";
+  updateButtonState('contrasting-colors-button');
+  hideOtherMessage();
 });
-document.getElementById('audio-button').addEventListener('click', () => {
-  selection = "Audio";
-  updateButtonState('audio-button');
+document.getElementById('large-text-button').addEventListener('click', () => {
+  selection = "Large Text";
+  updateButtonState('large-text-button');
+  hideOtherMessage();
 });
-document.getElementById('mobility-button').addEventListener('click', () => {
-  selection = "Mobility";
-  updateButtonState('mobility-button');
+document.getElementById('labeled-images-button').addEventListener('click', () => {
+  selection = "Labeled Images";
+  updateButtonState('labeled-images-button');
+  hideOtherMessage();
 });
+
+// Event listeners for "other" buttons
+const otherButtons = [
+  'other-button-1',
+  'other-button-2',
+  'other-button-3'
+];
+
+otherButtons.forEach(buttonId => {
+  document.getElementById(buttonId).addEventListener('click', () => {
+    selection = "Other";
+    showOtherMessage(); // Show the other message when an Other button is clicked
+  });
+});
+
+// Function to show the message
+function showOtherMessage() {
+  document.getElementById('other-message').style.display = 'block';
+}
+
+// Function to hide the message
+function hideOtherMessage() {
+  document.getElementById('other-message').style.display = 'none';
+}
 
 document.getElementById('captureDom').addEventListener('click', () => {
   const selection = document.getElementById("accessibility-selection").value;
