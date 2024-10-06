@@ -78,7 +78,7 @@ document.getElementById('captureDom').addEventListener('click', () => {
             },
             body: JSON.stringify({ dom, css })
           })
-            .then(res => res.text())
+            .then(res => res.json())
             .then(score => {
               document.getElementById("score-display").style.visibility = "visible";
               document.getElementById("score").innerHTML = score;
