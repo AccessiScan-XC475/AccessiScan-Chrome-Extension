@@ -14,8 +14,26 @@
         margin: 0;
         padding: 0;
         overflow: hidden; /* Prevents scrollbars */
-        font-family: 'Poppins', sans-serif; /* Applying the font globally */
+        font-family: 'Poppins', sans-serif; 
       }
+     
+      main {
+        padding: 20px; 
+        box-sizing: border-box; 
+      }
+
+      h1 {
+        text-align: center; 
+        margin-top: 20px; 
+      }
+
+      /* Centering selection buttons */
+      #selection-buttons {
+        display: flex;
+        justify-content: center; 
+        margin-top: 20px; 
+      }
+
       /* Styling for scan button */
       #captureDom {
         position: fixed;
@@ -25,22 +43,38 @@
         margin: 0;    
         z-index: 100; 
         background-color: white !important;  
-        color: black !important; 
-        border: 1px solid black; 
+        border-color: black ;
+        color: black;
       }
-      /* Setting hover color */
+      /* Setting hover color for scan button */
       #captureDom:hover {
-        background-color: #8dd2dd !important; /* blue color for hover */
-        color: black !important;
+        background-color: #8b95f6  !important; 
+        color: white; 
+        border-color: #9b8bf4 ;
       }
-      /* Buttons for selection */
+      /* Selection button styling */
       .selection-button {
         margin: 0.25rem;
         width: 100px;
+        border-color: #9b8bf4 ;
+      }
+
+      /* Hover color for selection buttons */
+      .selection-button:hover {
+        background-color: #8b95f6 ;
+        color: white; 
+        border-color: #9b8bf4 ;
+      }
+
+      /* Selected state for selection buttons */
+      .selection-button.selected {
+        background-color: #8b95f6; 
+        color: white; 
+        border-color: #9b8bf4; 
       }
 
       h1, h2, h3 {
-        font-family: 'Poppins', sans-serif; /* Applying the font to headings */
+        font-family: 'Poppins', sans-serif; 
       }
       
     </style>

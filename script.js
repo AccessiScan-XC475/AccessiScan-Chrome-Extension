@@ -3,17 +3,20 @@ let selection = "";
 // Adding event listeners to the option buttons
 document.getElementById('visual-button').addEventListener('click', () => {
   selection = "Visual";
+  updateButtonState('visual-button');
 });
 document.getElementById('audio-button').addEventListener('click', () => {
   selection = "Audio";
+  updateButtonState('audio-button');
 });
 document.getElementById('mobility-button').addEventListener('click', () => {
   selection = "Mobility";
+  updateButtonState('mobility-button');
 });
 
 document.getElementById('captureDom').addEventListener('click', () => {
   const selection = document.getElementById("accessibility-selection").value;
-  
+
   // Get the active tab
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     const activeTab = tabs[0];
@@ -61,6 +64,20 @@ document.getElementById('captureDom').addEventListener('click', () => {
     );
   });
 });
+
+// Function to update button state
+function updateButtonState(selectedButtonId) {
+  // Get all selection buttons
+  const selectionButtons = document.querySelectorAll('.selection-button');
+
+  // Remove 'selected' class from all buttons
+  selectionButtons.forEach(btn => {
+    btn.classList.remove('selected');
+  });
+
+  // Add 'selected' class to the clicked button
+  document.getElementById(selectedButtonId).classList.add('selected');
+}
 
 // This function will be injected into the active tab and will capture both the DOM and CSS
 function captureDOMAndCSS() {
