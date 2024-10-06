@@ -1,8 +1,12 @@
-document.getElementById('captureDom').addEventListener('click', () => {
-  const selection = document.getElementById("accessibility-selection").value;
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('captureDom').addEventListener('click', () => {
+    const selection = document.getElementById("accessibility-selection").value;
+
+    document.getElementById('captureDom').addEventListener('click', () => {
+      const selection = document.getElementById("accessibility-selection").value;
   
-  // Get the active tab
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        // Get the active tab
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     const activeTab = tabs[0];
 
     // Inject the content script
@@ -87,3 +91,5 @@ function captureDOMAndCSS() {
 
   return { dom: capturedDom, css: capturedCss };
 }
+});
+});
