@@ -1,19 +1,109 @@
 <html>
-  <body>
-    <main>
-      <h1>AccessiScan</h1>
+  <head>
+    <!-- Ant Design CSS CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.23.5/antd.min.css">
+    <!-- Poppins Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style>
+      /* Setting the dimensions of the popup */
+      html, body {
+        width: 400px;   
+        height: 500px;  
+        margin: 0;
+        padding: 0;
+        overflow: hidden; /* Prevents scrollbars */
+        font-family: 'Poppins', sans-serif; 
+      }
+     
+      main {
+        padding: 20px; 
+        box-sizing: border-box; 
+      }
+
+      h1 {
+        text-align: center; 
+        margin-top: 20px; 
+      }
+
+      /* Centering selection buttons */
+      #selection-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center; 
+        margin-top: 20px; 
+        min-width: 150px;
+        padding: 10px;
+      }
+
+      /* Selection button styling */
+      .selection-button {
+        margin: 0.25rem;
+        flex: 1 0 auto;
+        border-color: #9b8bf4 ;
+      }
+
+      /* Hover color for selection buttons */
+      .selection-button:hover {
+        background-color: #8b95f6 ;
+        color: white; 
+        border-color: #9b8bf4 ;
+      }
+
+      /* Selected state for selection buttons */
+      .selection-button.selected {
+        background-color: #8b95f6; 
+        color: white; 
+        border-color: #9b8bf4; 
+      }
+
+      /* Styling for scan button */
+      #captureDom {
+        position: fixed;
+        bottom: 20px; 
+        left: 50%;     
+        transform: translateX(-50%);  
+        margin: 0;    
+        z-index: 100; 
+        background-color: white !important;  
+        border-color: #9b8bf4;
+        color: black;
+      }
+      /* Setting hover color for scan button */
+      #captureDom:hover {
+        background-color: #8b95f6  !important; 
+        color: white; 
+        border-color: #9b8bf4 ;
+      }
+
+      h1, h2, h3 {
+        font-family: 'Poppins', sans-serif; 
+      }
+      
+    </style>
+  </head>
+  <body style="background-color: #90D8B2;">
+    <main> 
+      <h1><b>AccessiScan</b></h1>
+      <h2>What are the goals for your project?</h2>
+      <h3>I want my project to be accessible for users who need: </h3>
+      <!-- Selection Buttons -->
+      <div id="selection-buttons">
+        <button class="ant-btn selection-button" id="contrasting-colors-button">Contrasting Colors</button>
+        <button class="ant-btn selection-button" id="large-text-button">Large Text</button>
+        <button class="ant-btn selection-button" id="labeled-images-button">Labeled Images</button>
+        <button class="ant-btn selection-button" id="other-button-1">Other</button>
+        <button class="ant-btn selection-button" id="other-button-2">Other</button>
+        <button class="ant-btn selection-button" id="other-button-3">Other</button>
+      </div>
+      <p id="other-message" style="display: none; text-align: center;">Will be implemented later</p>
       <div style="display: flex; margin: 0.25rem; height: 30px; align-items: center;">
-        <button id="captureDom">Scan</button>
+        <button id="captureDom" class="ant-btn ant-btn-primary"><b>Scan</b></button>
         <p id="score-display" style="visibility: hidden; padding: 0.1rem; margin: 0.2rem;">
           <span id="score"></span>/100
         </p>
       </div>
-      <select id="accessibility-selection">
-        <option></option>
-        <option>Visual</option>
-        <option>Audio</option>
-        <option>Mobility</option>
-      </select>
     </main>
     <script src="script.js"></script>
   </body>

@@ -1,6 +1,48 @@
+let selection = "";
+
+// Adding event listeners to the option buttons
+document.getElementById('contrasting-colors-button').addEventListener('click', () => {
+  selection = "Contrasting Colors";
+  updateButtonState('contrasting-colors-button');
+  hideOtherMessage();
+});
+document.getElementById('large-text-button').addEventListener('click', () => {
+  selection = "Large Text";
+  updateButtonState('large-text-button');
+  hideOtherMessage();
+});
+document.getElementById('labeled-images-button').addEventListener('click', () => {
+  selection = "Labeled Images";
+  updateButtonState('labeled-images-button');
+  hideOtherMessage();
+});
+
+// Event listeners for "other" buttons
+const otherButtons = [
+  'other-button-1',
+  'other-button-2',
+  'other-button-3'
+];
+
+otherButtons.forEach(buttonId => {
+  document.getElementById(buttonId).addEventListener('click', () => {
+    selection = "Other";
+    showOtherMessage(); // Show the other message when an Other button is clicked
+  });
+});
+
+// Function to show the message
+function showOtherMessage() {
+  document.getElementById('other-message').style.display = 'block';
+}
+
+// Function to hide the message
+function hideOtherMessage() {
+  document.getElementById('other-message').style.display = 'none';
+}
+
 document.getElementById('captureDom').addEventListener('click', () => {
-  const selection = document.getElementById("accessibility-selection").value;
-  
+
   // Get the active tab
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     const activeTab = tabs[0];
@@ -48,6 +90,20 @@ document.getElementById('captureDom').addEventListener('click', () => {
     );
   });
 });
+
+// Function to update button state
+function updateButtonState(selectedButtonId) {
+  // Get all selection buttons
+  const selectionButtons = document.querySelectorAll('.selection-button');
+
+  // Remove 'selected' class from all buttons
+  selectionButtons.forEach(btn => {
+    btn.classList.remove('selected');
+  });
+
+  // Add 'selected' class to the clicked button
+  document.getElementById(selectedButtonId).classList.add('selected');
+}
 
 // This function will be injected into the active tab and will capture both the DOM and CSS
 function captureDOMAndCSS() {
