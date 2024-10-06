@@ -1,3 +1,16 @@
+let selection = "";
+
+// Adding event listeners to the option buttons
+document.getElementById('visual-button').addEventListener('click', () => {
+  selection = "Visual";
+});
+document.getElementById('audio-button').addEventListener('click', () => {
+  selection = "Audio";
+});
+document.getElementById('mobility-button').addEventListener('click', () => {
+  selection = "Mobility";
+});
+
 document.getElementById('captureDom').addEventListener('click', () => {
   const selection = document.getElementById("accessibility-selection").value;
   
