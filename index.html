@@ -84,6 +84,14 @@
         border-color: #9b8bf4;
       }
 
+      #score-display {
+        visibility: hidden;
+        padding: 0.1rem;
+        margin: 0.2rem;
+        font-weight: 600;
+        font-size: 25px;
+      }
+
       h1,
       h2,
       h3 {
@@ -126,17 +134,13 @@
           margin: 0.25rem;
           height: 30px;
           align-items: center;
+          justify-content: center;
         "
       >
         <button id="captureDom" class="ant-btn ant-btn-primary">
           <b>Scan</b>
         </button>
-        <p
-          id="score-display"
-          style="visibility: hidden; padding: 0.1rem; margin: 0.2rem"
-        >
-          <span id="score"></span>/100
-        </p>
+        <p id="score-display"><span id="score"></span>/100</p>
       </div>
     </main>
     <script src="script.js"></script>
