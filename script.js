@@ -1,25 +1,26 @@
 let selection = "";
 
 // Adding event listeners to the option buttons
-document
-  .getElementById("contrasting-colors-button")
-  .addEventListener("click", () => {
-    selection = "Contrasting Colors";
-    updateButtonState("contrasting-colors-button");
-    hideOtherMessage();
-  });
+document.getElementById("contrasting-colors-button").addEventListener("click", () => {
+  selection = "Contrasting Colors";
+  updateButtonState("contrasting-colors-button");
+  hideErrorMessage();
+  hideOtherMessage();
+});
+
 document.getElementById("large-text-button").addEventListener("click", () => {
   selection = "Large Text";
   updateButtonState("large-text-button");
+  hideErrorMessage();
   hideOtherMessage();
 });
-document
-  .getElementById("labeled-images-button")
-  .addEventListener("click", () => {
-    selection = "Labeled Images";
-    updateButtonState("labeled-images-button");
-    hideOtherMessage();
-  });
+
+document.getElementById("labeled-images-button").addEventListener("click", () => {
+  selection = "Labeled Images";
+  updateButtonState("labeled-images-button");
+  hideErrorMessage();
+  hideOtherMessage();
+});
 
 // Event listeners for "other" buttons
 const otherButtons = ["other-button-1", "other-button-2", "other-button-3"];
@@ -27,71 +28,78 @@ const otherButtons = ["other-button-1", "other-button-2", "other-button-3"];
 otherButtons.forEach((buttonId) => {
   document.getElementById(buttonId).addEventListener("click", () => {
     selection = "Other";
-    showOtherMessage(); // Show the other message when an Other button is clicked
+    updateButtonState(buttonId);
+    hideErrorMessage();
+    showOtherMessage(); // Show the other message when an "Other" button is clicked
   });
 });
 
-// Function to show the message
+// Function to show the "other" message
 function showOtherMessage() {
   document.getElementById("other-message").style.display = "block";
 }
 
-// Function to hide the message
+// Function to hide the "other" message
 function hideOtherMessage() {
   document.getElementById("other-message").style.display = "none";
 }
 
+// Function to show the error message when no selection is made
+function showErrorMessage() {
+  const errorMessage = document.getElementById("error-message");
+  errorMessage.style.display = "block";
+}
+
+// Function to hide the error message when a selection is made
+function hideErrorMessage() {
+  const errorMessage = document.getElementById("error-message");
+  errorMessage.style.display = "none";
+}
+
+// Modified event listener for the "Scan" button
 document.getElementById("captureDom").addEventListener("click", () => {
-  // Get the active tab
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    const activeTab = tabs[0];
+  // Check if a scan type is selected before proceeding
+  if (selection !== "") {
+    // Proceed with the scan
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0];
 
-    // Inject the content script
-    chrome.scripting.executeScript(
-      {
-        target: { tabId: activeTab.id },
-        function: captureDOMAndCSS,
-      },
-      (results) => {
-        if (results && results[0] && results[0].result) {
-          const { dom, css } = results[0].result;
-          // console.log(dom);
-          // console.log("----------now CSS:");
-          // console.log(css);
+      // Inject the content script
+      chrome.scripting.executeScript(
+        {
+          target: { tabId: activeTab.id },
+          function: captureDOMAndCSS,
+        },
+        (results) => {
+          if (results && results[0] && results[0].result) {
+            const { dom, css } = results[0].result;
 
-          chrome.runtime.sendMessage({ message: dom }, function (response) {
-            console.log("Response from background:", response);
-          });
+            chrome.runtime.sendMessage({ message: dom }, function (response) {
+              console.log("Response from background:", response);
+            });
 
-          if (selection != "") {
-            fetch(
-              `http://localhost:3000/api/accessibility-selection?name=${selection}`,
-              {
-                method: "POST",
+            fetch("http://localhost:4200/api/scan", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
               },
-            );
-          }
-
-          // Send the DOM and CSS to an API endpoint
-          fetch("http://localhost:4200/api/scan", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ dom, css }),
-          })
-            .then((res) => res.text())
-            .then((score) => {
-              document.getElementById("score-display").style.visibility =
-                "visible";
-              document.getElementById("score").innerHTML = score;
-              console.log(score);
+              body: JSON.stringify({ dom, css }),
             })
-            .catch((err) => console.error(err));
-        }
-      },
-    );
-  });
+              .then((res) => res.text())
+              .then((score) => {
+                document.getElementById("score-display").style.visibility = "visible";
+                document.getElementById("score").innerHTML = score;
+                console.log(score);
+              })
+              .catch((err) => console.error(err));
+          }
+        },
+      );
+    });
+  } else {
+    // If no selection is made, show the error message
+    showErrorMessage();
+  }
 });
 
 // Function to update button state
