@@ -135,7 +135,7 @@ function performScan(scanType) {
           let apiEndpoint = "";
           switch (scanType) {
             case "Contrasting Colors":
-              apiEndpoint = "/api/scan";
+              apiEndpoint = "/api/scan-contrasting-colors";
               break;
             case "Large Text":
               apiEndpoint = "/api/scan-large-text";
