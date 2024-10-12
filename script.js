@@ -4,22 +4,28 @@ let selection = "";
 document.getElementById("contrasting-colors-button").addEventListener("click", () => {
   selection = "Contrasting Colors";
   updateButtonState("contrasting-colors-button");
+  clearScoreDisplay();
   hideErrorMessage();
   hideOtherMessage();
+  hideNotImplementedMessage();
 });
 
 document.getElementById("large-text-button").addEventListener("click", () => {
   selection = "Large Text";
   updateButtonState("large-text-button");
+  clearScoreDisplay();
   hideErrorMessage();
   hideOtherMessage();
+  hideNotImplementedMessage();
 });
 
 document.getElementById("labeled-images-button").addEventListener("click", () => {
   selection = "Labeled Images";
   updateButtonState("labeled-images-button");
+  clearScoreDisplay();
   hideErrorMessage();
   hideOtherMessage();
+  hideNotImplementedMessage();
 });
 
 // Event listeners for "other" buttons
@@ -30,12 +36,14 @@ otherButtons.forEach((buttonId) => {
     selection = "Other";
     updateButtonState(buttonId);
     hideErrorMessage();
+    hideNotImplementedMessage();
     showOtherMessage(); // Show the other message when an "Other" button is clicked
   });
 });
 
 // Function to show the "other" message
 function showOtherMessage() {
+  clearScoreDisplay();
   document.getElementById("other-message").style.display = "block";
 }
 
@@ -68,6 +76,12 @@ function hideNotImplementedMessage() {
   message.style.display = "none";
 }
 
+// Function to clear the score display
+function clearScoreDisplay() {
+  document.getElementById("score-display").style.visibility = "hidden";
+  document.getElementById("score").innerHTML = "";
+}
+
 // Event listener for the "Scan" button
 document.getElementById("captureDom").addEventListener("click", () => {
   // Check if a scan type is selected before proceeding
@@ -95,8 +109,12 @@ function updateButtonState(selectedButtonId) {
 
 // Unified function to perform the scan based on the selection
 function performScan(scanType) {
-  // Hide the "not implemented" message by default
+  // Clear any previous score display
+  clearScoreDisplay();
+
+  // Hide the "not implemented" and "other" messages by default
   hideNotImplementedMessage();
+  hideOtherMessage();
 
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     const activeTab = tabs[0];
