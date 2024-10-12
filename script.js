@@ -56,6 +56,18 @@ function hideErrorMessage() {
   errorMessage.style.display = "none";
 }
 
+// Function to show the "not implemented" message
+function showNotImplementedMessage() {
+  const message = document.getElementById("not-implemented-message");
+  message.style.display = "block";
+}
+
+// Function to hide the "not implemented" message
+function hideNotImplementedMessage() {
+  const message = document.getElementById("not-implemented-message");
+  message.style.display = "none";
+}
+
 // Event listener for the "Scan" button
 document.getElementById("captureDom").addEventListener("click", () => {
   // Check if a scan type is selected before proceeding
@@ -83,6 +95,9 @@ function updateButtonState(selectedButtonId) {
 
 // Unified function to perform the scan based on the selection
 function performScan(scanType) {
+  // Hide the "not implemented" message by default
+  hideNotImplementedMessage();
+
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     const activeTab = tabs[0];
 
@@ -108,7 +123,7 @@ function performScan(scanType) {
               apiEndpoint = "/api/scan-large-text";
               break;
             default:
-              alert("This scan type is not implemented yet.");
+              showNotImplementedMessage();
               return;
           }
 
