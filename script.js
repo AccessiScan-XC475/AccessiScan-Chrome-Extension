@@ -78,6 +78,13 @@ document.getElementById("captureDom").addEventListener("click", () => {
               console.log("Response from background:", response);
             });
 
+            fetch(
+                `http://localhost:3000/api/accessibility-selection?name=${selection}`,
+                {
+                  method: "POST",
+                },
+              );
+
             fetch("http://localhost:4200/api/scan", {
               method: "POST",
               headers: {
