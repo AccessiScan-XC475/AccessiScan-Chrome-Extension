@@ -55,21 +55,6 @@ document.getElementById("captureDom").addEventListener("click", () => {
     }
 });
 
-// Function to update button state
-function updateButtonState(selectedButtonId) {
-    // Get all selection buttons
-    const selectionButtons = document.querySelectorAll(".selection-button");
-  
-    // Remove 'selected' class from all buttons
-    selectionButtons.forEach((btn) => {
-      btn.classList.remove("selected");
-    });
-  
-    // Add 'selected' class to the clicked button
-    document.getElementById(selectedButtonId).classList.add("selected");
-}
-
-// Unified function to perform the scan based on the selection
 function performScan(scanType) {
   // Clear any previous score display
   msgs.clearScoreDisplay();
@@ -84,7 +69,7 @@ function performScan(scanType) {
     chrome.scripting.executeScript(
       {
         target: { tabId: activeTab.id },
-        function: captureDOMAndCSS,
+        function: captureDOMAndCSS, // Use this to capture if needed
       },
       (results) => {
         if (results && results[0] && results[0].result) {
@@ -95,41 +80,37 @@ function performScan(scanType) {
           });
 
           let apiEndpoint = "";
+          let highlightSelector = "";
+
           switch (scanType) {
             case "Contrasting Colors":
-              apiEndpoint = "/api/scan-contrasting-colors";
+              highlightSelector = "p"; // Example: highlight paragraphs
               break;
             case "Large Text":
-              apiEndpoint = "/api/scan-large-text";
+              highlightSelector = "h1, h2, h3"; // Example: highlight headings
               break;
             default:
               msgs.showNotImplementedMessage();
               return;
           }
 
-          fetch(
-            `http://localhost:3000/api/accessibility-selection?name=${selection}`,
-            {
-              method: "POST",
-            },
-          );
-
-          fetch(`http://localhost:4200${apiEndpoint}`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ dom, css }),
-          })
-            .then((res) => res.text())
-            .then((score) => {
-              document.getElementById("score-display").style.visibility = "visible";
-              document.getElementById("score").innerHTML = score;
-              console.log(score);
-            })
-            .catch((err) => console.error(err));
+          // Inject the script to highlight elements
+          chrome.scripting.executeScript({
+            target: { tabId: activeTab.id },
+            function: highlightElements,
+            args: [highlightSelector] // Pass the selector to the function
+          });
         }
-      },
+      }
     );
+  });
+}
+
+// Function to highlight elements on the page
+function highlightElements(selector) {
+  const elements = document.querySelectorAll(selector); // Select all matching elements
+  elements.forEach((element) => {
+    element.style.backgroundColor = "yellow"; // Or use another visual indicator like a border
+    element.style.border = "2px solid red"; // Optional: add a border
   });
 }
