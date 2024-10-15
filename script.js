@@ -1,120 +1,82 @@
+import * as msgs from './misc/display.js';
+import { captureDOMAndCSS } from './misc/extract.js';
+
 let selection = "";
 
 // Adding event listeners to the option buttons
 document.getElementById("contrasting-colors-button").addEventListener("click", () => {
-  selection = "Contrasting Colors";
-  updateButtonState("contrasting-colors-button");
-  clearScoreDisplay();
-  hideErrorMessage();
-  hideOtherMessage();
-  hideNotImplementedMessage();
-});
-
+    selection = "Contrasting Colors";
+    updateButtonState("contrasting-colors-button");
+    msgs.clearScoreDisplay();
+    msgs.hideErrorMessage();
+    msgs.hideOtherMessage();
+    msgs.hideNotImplementedMessage();
+  });
+  
 document.getElementById("large-text-button").addEventListener("click", () => {
-  selection = "Large Text";
-  updateButtonState("large-text-button");
-  clearScoreDisplay();
-  hideErrorMessage();
-  hideOtherMessage();
-  hideNotImplementedMessage();
+    selection = "Large Text";
+    updateButtonState("large-text-button");
+    msgs.clearScoreDisplay();
+    msgs.hideErrorMessage();
+    msgs.hideOtherMessage();
+    msgs.hideNotImplementedMessage();
 });
-
+  
 document.getElementById("labeled-images-button").addEventListener("click", () => {
-  selection = "Labeled Images";
-  updateButtonState("labeled-images-button");
-  clearScoreDisplay();
-  hideErrorMessage();
-  hideOtherMessage();
-  hideNotImplementedMessage();
+    selection = "Labeled Images";
+    updateButtonState("labeled-images-button");
+    msgs.clearScoreDisplay();
+    msgs.hideErrorMessage();
+    msgs.hideOtherMessage();
+    msgs.hideNotImplementedMessage();
 });
-
+  
 // Event listeners for "other" buttons
 const otherButtons = ["other-button-1", "other-button-2", "other-button-3"];
-
+  
 otherButtons.forEach((buttonId) => {
-  document.getElementById(buttonId).addEventListener("click", () => {
-    selection = "Other";
-    updateButtonState(buttonId);
-    hideErrorMessage();
-    hideNotImplementedMessage();
-    showOtherMessage(); // Show the other message when an "Other" button is clicked
-  });
+    document.getElementById(buttonId).addEventListener("click", () => {
+      selection = "Other";
+      updateButtonState(buttonId);
+      msgs.hideErrorMessage();
+      msgs.hideNotImplementedMessage();
+      msgs.showOtherMessage(); // Show the other message when an "Other" button is clicked
+    });
 });
-
-// Function to show the "other" message
-function showOtherMessage() {
-  clearScoreDisplay();
-  document.getElementById("other-message").style.display = "block";
-}
-
-// Function to hide the "other" message
-function hideOtherMessage() {
-  document.getElementById("other-message").style.display = "none";
-}
-
-// Function to show the error message when no selection is made
-function showErrorMessage() {
-  const errorMessage = document.getElementById("error-message");
-  errorMessage.style.display = "block";
-}
-
-// Function to hide the error message when a selection is made
-function hideErrorMessage() {
-  const errorMessage = document.getElementById("error-message");
-  errorMessage.style.display = "none";
-}
-
-// Function to show the "not implemented" message
-function showNotImplementedMessage() {
-  const message = document.getElementById("not-implemented-message");
-  message.style.display = "block";
-}
-
-// Function to hide the "not implemented" message
-function hideNotImplementedMessage() {
-  const message = document.getElementById("not-implemented-message");
-  message.style.display = "none";
-}
-
-// Function to clear the score display
-function clearScoreDisplay() {
-  document.getElementById("score-display").style.visibility = "hidden";
-  document.getElementById("score").innerHTML = "";
-}
-
+  
 // Event listener for the "Scan" button
 document.getElementById("captureDom").addEventListener("click", () => {
-  // Check if a scan type is selected before proceeding
-  if (selection !== "") {
-    performScan(selection);
-  } else {
-    // If no selection is made, show the error message
-    showErrorMessage();
-  }
+    // Check if a scan type is selected before proceeding
+    if (selection !== "") {
+      performScan(selection);
+    } else {
+      // If no selection is made, show the error message
+      msgs.showErrorMessage();
+    }
 });
 
 // Function to update button state
 function updateButtonState(selectedButtonId) {
-  // Get all selection buttons
-  const selectionButtons = document.querySelectorAll(".selection-button");
-
-  // Remove 'selected' class from all buttons
-  selectionButtons.forEach((btn) => {
-    btn.classList.remove("selected");
-  });
-
-  // Add 'selected' class to the clicked button
-  document.getElementById(selectedButtonId).classList.add("selected");
+    // Get all selection buttons
+    const selectionButtons = document.querySelectorAll(".selection-button");
+  
+    // Remove 'selected' class from all buttons
+    selectionButtons.forEach((btn) => {
+      btn.classList.remove("selected");
+    });
+  
+    // Add 'selected' class to the clicked button
+    document.getElementById(selectedButtonId).classList.add("selected");
 }
 
 // Unified function to perform the scan based on the selection
 function performScan(scanType) {
   // Clear any previous score display
-  clearScoreDisplay();
+  msgs.clearScoreDisplay();
 
   // Hide the "not implemented" and "other" messages by default
-  hideNotImplementedMessage();
-  hideOtherMessage();
+  msgs.hideNotImplementedMessage();
+  msgs.hideOtherMessage();
 
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     const activeTab = tabs[0];
@@ -141,7 +103,7 @@ function performScan(scanType) {
               apiEndpoint = "/api/scan-large-text";
               break;
             default:
-              showNotImplementedMessage();
+              msgs.showNotImplementedMessage();
               return;
           }
 
@@ -170,44 +132,4 @@ function performScan(scanType) {
       },
     );
   });
-}
-
-// This function will be injected into the active tab and will capture both the DOM and CSS
-function captureDOMAndCSS() {
-  const capturedDom = document.documentElement.outerHTML;
-
-  // Extract inline styles
-  const allElements = document.querySelectorAll("*");
-  let inlineStyles = "";
-  allElements.forEach((el) => {
-    if (el.style.cssText) {
-      inlineStyles += `${el.tagName.toLowerCase()} { ${el.style.cssText} }\n`;
-    }
-  });
-
-  // Extract styles from <style> tags in the HTML
-  const styleTags = document.querySelectorAll("style");
-  let styleTagCSS = "";
-  styleTags.forEach((tag) => {
-    styleTagCSS += tag.innerHTML + "\n";
-  });
-
-  // Extract CSS from all external and internal stylesheets
-  let cssRules = [];
-  for (let i = 0; i < document.styleSheets.length; i++) {
-    try {
-      const rules =
-        document.styleSheets[i].cssRules || document.styleSheets[i].rules;
-      for (let j = 0; j < rules.length; j++) {
-        cssRules.push(rules[j].cssText);
-      }
-    } catch (e) {
-      console.error("Could not access stylesheet:", e);
-    }
-  }
-
-  // Combine all CSS
-  const capturedCss = inlineStyles + styleTagCSS + cssRules.join("\n");
-
-  return { dom: capturedDom, css: capturedCss };
 }
