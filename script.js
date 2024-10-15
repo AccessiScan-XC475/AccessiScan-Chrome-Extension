@@ -1,5 +1,5 @@
-import * as msgs from './misc/display.js';
-import { captureDOMAndCSS } from './misc/extract.js';
+import * as msgs from './utils/display.js';
+import { captureDOMAndCSS } from './utils/extract.js';
 
 let selection = "";
 
@@ -7,28 +7,19 @@ let selection = "";
 document.getElementById("contrasting-colors-button").addEventListener("click", () => {
     selection = "Contrasting Colors";
     updateButtonState("contrasting-colors-button");
-    msgs.clearScoreDisplay();
-    msgs.hideErrorMessage();
-    msgs.hideOtherMessage();
-    msgs.hideNotImplementedMessage();
+    msgs.clearAll();
   });
   
 document.getElementById("large-text-button").addEventListener("click", () => {
     selection = "Large Text";
     updateButtonState("large-text-button");
-    msgs.clearScoreDisplay();
-    msgs.hideErrorMessage();
-    msgs.hideOtherMessage();
-    msgs.hideNotImplementedMessage();
+    msgs.clearAll();
 });
   
 document.getElementById("labeled-images-button").addEventListener("click", () => {
     selection = "Labeled Images";
     updateButtonState("labeled-images-button");
-    msgs.clearScoreDisplay();
-    msgs.hideErrorMessage();
-    msgs.hideOtherMessage();
-    msgs.hideNotImplementedMessage();
+    msgs.clearAll();
 });
   
 // Event listeners for "other" buttons
