@@ -38,3 +38,11 @@ export function clearScoreDisplay() {
     document.getElementById("score-display").style.visibility = "hidden";
     document.getElementById("score").innerHTML = "";
 }
+
+// Function combining all clearing functions
+export function clearAll() {
+    clearScoreDisplay();
+    hideErrorMessage();
+    hideOtherMessage();
+    hideNotImplementedMessage();
+}
