@@ -3,7 +3,7 @@ import { captureDOMAndCSS } from './utils/extract.js';
 
 let selection = "";
 
-// Adding event listeners to the option buttons
+// Adding event listeners to the choices buttons
 document.getElementById("contrasting-colors-button").addEventListener("click", () => {
     selection = "Contrasting Colors";
     updateButtonState("contrasting-colors-button");
@@ -46,11 +46,23 @@ document.getElementById("captureDom").addEventListener("click", () => {
     }
 });
 
-function performScan(scanType) {
-  // Clear any previous score display
-  msgs.clearScoreDisplay();
+// Function to update button state
+function updateButtonState(selectedButtonId) {
+    // Get all selection buttons
+    const selectionButtons = document.querySelectorAll(".selection-button");
+  
+    // Remove 'selected' class from all buttons
+    selectionButtons.forEach((btn) => {
+      btn.classList.remove("selected");
+    });
+  
+    // Add 'selected' class to the clicked button
+    document.getElementById(selectedButtonId).classList.add("selected");
+}
 
-  // Hide the "not implemented" and "other" messages by default
+// Unified function to perform the scan based on the selection
+function performScan(scanType) {
+ // Hide the "not implemented" and "other" messages by default
   msgs.hideNotImplementedMessage();
   msgs.hideOtherMessage();
 
@@ -60,7 +72,7 @@ function performScan(scanType) {
     chrome.scripting.executeScript(
       {
         target: { tabId: activeTab.id },
-        function: captureDOMAndCSS, // Use this to capture if needed
+        function: captureDOMAndCSS,
       },
       (results) => {
         if (results && results[0] && results[0].result) {
@@ -71,37 +83,41 @@ function performScan(scanType) {
           });
 
           let apiEndpoint = "";
-          let highlightSelector = "";
-
           switch (scanType) {
             case "Contrasting Colors":
-              highlightSelector = "p"; // Example: highlight paragraphs
+              apiEndpoint = "/api/scan-contrasting-colors";
               break;
             case "Large Text":
-              highlightSelector = "h1, h2, h3"; // Example: highlight headings
+              apiEndpoint = "/api/scan-large-text";
               break;
             default:
               msgs.showNotImplementedMessage();
               return;
           }
 
-          // Inject the script to highlight elements
-          chrome.scripting.executeScript({
-            target: { tabId: activeTab.id },
-            function: highlightElements,
-            args: [highlightSelector] // Pass the selector to the function
-          });
-        }
-      }
-    );
-  });
-}
+          fetch(
+            `http://localhost:3000/api/accessibility-selection?name=${selection}`,
+            {
+              method: "POST",
+            },
+          );
 
-// Function to highlight elements on the page
-function highlightElements(selector) {
-  const elements = document.querySelectorAll(selector); // Select all matching elements
-  elements.forEach((element) => {
-    element.style.backgroundColor = "yellow"; // Or use another visual indicator like a border
-    element.style.border = "2px solid red"; // Optional: add a border
+          fetch(`http://localhost:4200${apiEndpoint}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ dom, css }),
+          })
+            .then((res) => res.text())
+            .then((score) => {
+              document.getElementById("score-display").style.visibility = "visible";
+              document.getElementById("score").innerHTML = score;
+              console.log(score);
+            })
+            .catch((err) => console.error(err));
+        }
+      },
+    );
   });
 }
