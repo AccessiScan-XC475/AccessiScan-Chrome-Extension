@@ -48,6 +48,9 @@ document.getElementById("captureDom").addEventListener("click", () => {
 
 // Function to update button state
 function updateButtonState(selectedButtonId) {
+    // Remove highlights when different button is pressed
+    // clearHighlights();
+
     // Get all selection buttons
     const selectionButtons = document.querySelectorAll(".selection-button");
   
