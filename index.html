@@ -17,7 +17,7 @@
       html,
       body {
         width: 400px;
-        height: 500px;
+        height: 600px;
         margin: 0;
         padding: 0;
         overflow: hidden; /* Prevents scrollbars */
@@ -37,13 +37,21 @@
       /* Centering selection buttons */
       #selection-buttons {
         display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+        flex-direction: column;
+        justify-content: left;
         margin-top: 20px;
         min-width: 150px;
         padding: 10px;
       }
-
+      button {
+        width: 200px; /* Allow buttons to adjust width automatically */
+        padding: 10px;
+        font-size: 16px;
+        border: 2px solid #6a5acd; /* Example border color */
+        background-color: white;
+        color: black;
+        cursor: pointer;
+}
       /* Selection button styling */
       .selection-button {
         margin: 0.25rem;
@@ -97,6 +105,40 @@
       h3 {
         font-family: "Poppins", sans-serif;
       }
+        /* Tooltip hidden by default */
+      .tooltip {
+        display: none;
+        position: absolute;
+        background-color: #333;
+        color: #fff;
+        padding: 5px;
+        border-radius: 5px;
+        font-size: 12px;
+        z-index: 1000;
+      }
+        /* Info icon style */
+      .info-icon {
+        cursor: pointer;
+        font-size: 14px;
+        margin-left: 5px;
+        color: #007bff;
+        display: inline-block;
+        background-color: black;
+        color: white;
+        width: 20px;
+        height: 20px;
+        text-align: center;
+        line-height: 20px;
+        border-radius: 50%;
+        display: inline-block;
+        line-height: 1.2;
+        top: 5px;
+        right: 5px;
+      }
+        /* Hover effect */
+      .info-icon:hover {
+        background-color: #007bff;
+      }
     </style>
   </head>
   <body style="background-color: #90d8b2">
@@ -106,25 +148,44 @@
       <h3>I want my project to be accessible for users who need:</h3>
       <!-- Selection Buttons -->
       <div id="selection-buttons">
-        <button class="ant-btn selection-button" id="contrasting-colors-button">
-          Contrasting Colors
+        <div class="button-item">
+          <button class="ant-btn selection-button" id="contrasting-colors-button">
+            Contrasting Colors
+          </button>
+          <span class="info-icon" id="info-contrasting-colors">i</span>
+        </div>
+      
+        <div class="button-item">
+          <button class="ant-btn selection-button" id="large-text-button">
+            Large Text
+          </button>
+          <span class="info-icon" id="info-large-text">i</span>
+        </div>
+      
+        <div class="button-item">
+          <button class="ant-btn selection-button" id="labeled-images-button">
+            Labeled Images
         </button>
-        <button class="ant-btn selection-button" id="large-text-button">
-          Large Text
-        </button>
-        <button class="ant-btn selection-button" id="labeled-images-button">
-          Labeled Images
-        </button>
-        <button class="ant-btn selection-button" id="other-button-1">
-          Other
-        </button>
-        <button class="ant-btn selection-button" id="other-button-2">
-          Other
-        </button>
-        <button class="ant-btn selection-button" id="other-button-3">
-          Other
-        </button>
+        <span class="info-icon" id="info-labeled-images">i</span>
+        </div>
+      
+        <div class="button-item">
+          <button class="ant-btn selection-button" id="other-button-1">Other</button>
+          <span class="info-icon" id="info-other-button-1">i</span>
+        </div>
+      
+        <div class="button-item">
+          <button class="ant-btn selection-button" id="other-button-2">Other</button>
+          <span class="info-icon" id="info-other-button-2">i</span>
+        </div>
+      
+        <div class="button-item">
+          <button class="ant-btn selection-button" id="other-button-3">Other</button>
+          <span class="info-icon" id="info-other-button-3">i</span>
+        </div>
       </div>
+      
+      <div id="tooltip" class="tooltip"></div>
       <p id="error-message" style="display: none; text-align: center">
         Please select an accessiblity category :)
       </p>

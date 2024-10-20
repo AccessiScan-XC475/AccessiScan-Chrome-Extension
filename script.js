@@ -60,6 +60,48 @@ function updateButtonState(selectedButtonId) {
     document.getElementById(selectedButtonId).classList.add("selected");
 }
 
+// Tooltip content for each info button
+const tooltips = {
+  'info-contrasting-colors': 'This button checks if the text on the page has sufficient color contrast for readability (at least a 4.5:1 ratio).',
+  'info-large-text': 'This button checks if the text size is large enough (at least size 16) for visually impaired users.',
+  'info-labeled-images': 'This button checks if images have labels, which improves accessibility for screen reader users.'
+};
+
+// Get the tooltip element
+const tooltip = document.getElementById('tooltip');
+
+// Function to show the tooltip
+function showTooltip(event, message) {
+  tooltip.style.display = 'block';
+  tooltip.textContent = message;
+  tooltip.style.left = `${event.pageX + 10}px`;
+  tooltip.style.top = `${event.pageY + 10}px`;
+}
+
+// Function to hide the tooltip
+function hideTooltip() {
+  tooltip.style.display = 'none';
+}
+
+// Add event listeners to info icons
+document.getElementById('info-contrasting-colors').addEventListener('mouseenter', (event) => {
+  showTooltip(event, tooltips['info-contrasting-colors']);
+});
+
+document.getElementById('info-contrasting-colors').addEventListener('mouseleave', hideTooltip);
+
+document.getElementById('info-large-text').addEventListener('mouseenter', (event) => {
+  showTooltip(event, tooltips['info-large-text']);
+});
+
+document.getElementById('info-large-text').addEventListener('mouseleave', hideTooltip);
+
+document.getElementById('info-labeled-images').addEventListener('mouseenter', (event) => {
+  showTooltip(event, tooltips['info-labeled-images']);
+});
+
+document.getElementById('info-labeled-images').addEventListener('mouseleave', hideTooltip);
+
 // Unified function to perform the scan based on the selection
 function performScan(scanType) {
  // Hide the "not implemented" and "other" messages by default
