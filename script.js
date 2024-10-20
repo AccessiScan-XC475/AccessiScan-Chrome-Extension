@@ -14,6 +14,7 @@ document.getElementById("large-text-button").addEventListener("click", () => {
     selection = "Large Text";
     updateButtonState("large-text-button");
     msgs.clearAll();
+    clearHighlights();
 });
   
 document.getElementById("labeled-images-button").addEventListener("click", () => {
@@ -112,15 +113,69 @@ function performScan(scanType) {
             },
             body: JSON.stringify({ dom, css }),
           })
-            .then((res) => res.text())
-            .then((score) => {
+            
+            .then((res) => res.json())
+            .then((data) => {
               document.getElementById("score-display").style.visibility = "visible";
-              document.getElementById("score").innerHTML = score;
-              console.log(score);
+              document.getElementById("score").innerHTML = data.score;
+              console.log("Score:", data.score);
+              console.log("Inaccessible elements:", data.inaccessible_elements);
+
+              if (scanType == "Contrasting Colors") {
+                console.log("test console log");
+                chrome.scripting.executeScript({
+                target: { tabId: activeTab.id },
+                function: highlightInaccessibleElements,
+                args: [data.inaccessible_elements]  // Pass inaccessible elements to the function
+              });
+            }
             })
             .catch((err) => console.error(err));
         }
       },
     );
   });
+}
+
+function highlightInaccessibleElements(inaccessibleElements) {
+  // Iterate over the list of inaccessible elements and apply styles to highlight them
+  inaccessibleElements.forEach((htmlElement) => {
+    // Parse the HTML string to find the corresponding element in the current DOM
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlElement, 'text/html');
+    const inaccessibleElement = doc.body.firstChild;
+
+    // Find the element in the active page
+    const elementInPage = document.querySelector(inaccessibleElement.tagName.toLowerCase());
+    
+    if (elementInPage) {
+      // Apply a red border or other highlighting styles to indicate inaccessibility
+      elementInPage.style.outline = "3px solid red";
+      elementInPage.style.backgroundColor = "yellow";
+
+      // Add a custom attribute to track highlighted elements
+      elementInPage.setAttribute("data-highlighted", "true");
+
+      console.log("Element highlighted and marked with data-highlighted:", elementInPage);
+    }
+  });
+  console.log("Highlighted elements:", highlightedElements);
+}
+
+// Function to clear all highlights
+function clearHighlights() {
+  console.log("clearHighlights called");
+  // Find all elements that were previously highlighted (those with data-highlighted attribute)
+  const highlightedElements = document.querySelectorAll("[data-highlighted='true']");
+
+  // Iterate over these elements and remove only the highlight styles
+  highlightedElements.forEach((element) => {
+    element.style.outline = ""; // Remove the red outline
+    element.style.backgroundColor = ""; // Remove the yellow background
+
+    // Remove the custom attribute used to track highlights
+    element.removeAttribute("data-highlighted");
+  });
+
+  console.log("Cleared highlights from elements:", highlightedElements);
 }
