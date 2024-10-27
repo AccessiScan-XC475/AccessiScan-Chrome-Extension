@@ -137,11 +137,11 @@
       .tooltip {
         display: none;
         position: absolute;
-        background-color: #333;
-        color: #fff;
-        padding: 5px;
+        background-color: #196CAD; /* Set background color */
+        color: #fff; /* Set text color to white */
+        padding: 8px;
         border-radius: 5px;
-        font-size: 12px;
+        font-size: 16px; /* Set font size to 16px */
         z-index: 1000;
       }
         /* Info icon style */
@@ -160,6 +160,24 @@
         cursor: pointer;
         transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
       }
+
+      /* Default tooltip position (appears on the right) */
+      .info-icon:hover + .tooltip {
+        display: block;
+        left: 110%; /* Position tooltip to the right */
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      /* Tooltip positioned to the left */
+      .info-icon.tooltip-left:hover + .tooltip {
+        display: block;
+        right: 110%; /* Position tooltip to the left */
+        left: auto;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
         /* Hover effect */
       .info-icon:hover {
         background-color: #9b8bf4;
@@ -185,7 +203,8 @@
           <button class="ant-btn selection-button" id="large-text-button">
             Large Text
           </button>
-          <span class="info-icon" id="info-large-text">i</span>
+          <span class="info-icon tooltip-left" id="info-large-text">i</span>
+          <div class="tooltip tooltip-left">Tooltip for Large Text</div> 
         </div>
       
         <div class="button-item">
