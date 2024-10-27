@@ -16,7 +16,7 @@
       /* Setting the dimensions of the popup */
       html,
       body {
-        width: 400px;
+        width: 500px;
         height: 600px;
         margin: 0;
         padding: 0;
@@ -29,34 +29,64 @@
         box-sizing: border-box;
       }
 
-      h1 {
+      h1, h2 {
         text-align: center;
         margin-top: 20px;
+        color: #196CAD;
       }
 
-      /* Centering selection buttons */
       #selection-buttons {
-        display: flex;
-        flex-direction: column;
-        justify-content: left;
-        margin-top: 20px;
-        min-width: 150px;
-        padding: 10px;
+        display: grid;
+        grid-template-columns: 1fr 1fr; 
+        gap: 10px; 
+
       }
+
+      .button-item {
+        display: flex;
+        align-items: center;
+        /* justify-content: space-between;
+        height: 100%; */
+      }
+
+      .button-item .info-icon {
+        font-size: 14px;
+      }
+
+      .button-item:nth-child(odd) .info-icon {
+        order: -1; 
+        margin-right: 5px;
+      }
+
+      .button-item:nth-child(even) .info-icon {
+        margin-left: 5px;
+      }
+
       button {
-        width: 200px; /* Allow buttons to adjust width automatically */
+        width: 200px; 
         padding: 10px;
         font-size: 16px;
-        border: 2px solid #6a5acd; /* Example border color */
+        border: 2px solid #6a5acd; 
         background-color: white;
         color: black;
         cursor: pointer;
 }
       /* Selection button styling */
       .selection-button {
-        margin: 0.25rem;
-        flex: 1 0 auto;
+        max-width: 150px;
+        width: 100%; 
+        padding: 10px;
+        font-size: 16px;
+        height: 100%;
+        white-space: normal; 
         border-color: #9b8bf4;
+        border-width: 2px;
+        word-wrap: break-word; 
+        display: flex;
+        align-items: center; 
+        justify-content: center;
+        border-radius: 15px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
       }
 
       /* Hover color for selection buttons */
@@ -100,73 +130,88 @@
         font-size: 25px;
       }
 
-      h1,
-      h2,
-      h3 {
+      h1, h2, h3 {
         font-family: "Poppins", sans-serif;
       }
         /* Tooltip hidden by default */
       .tooltip {
         display: none;
         position: absolute;
-        background-color: #333;
-        color: #fff;
-        padding: 5px;
+        background-color: #196CAD; /* Set background color */
+        color: #fff; /* Set text color to white */
+        padding: 8px;
         border-radius: 5px;
-        font-size: 12px;
+        font-size: 16px; /* Set font size to 16px */
         z-index: 1000;
       }
         /* Info icon style */
       .info-icon {
-        cursor: pointer;
         font-size: 14px;
-        margin-left: 5px;
-        color: #007bff;
-        display: inline-block;
-        background-color: black;
-        color: white;
-        width: 20px;
-        height: 20px;
-        text-align: center;
-        line-height: 20px;
+        font-weight: bold;
+        color: #808080; /* Gray color for the 'i' */
+        background-color: transparent; /* Transparent background */
+        border: 2px solid #808080; /* Gray border */
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
         border-radius: 50%;
-        display: inline-block;
-        line-height: 1.2;
-        top: 5px;
-        right: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
       }
+
+      /* Default tooltip position (appears on the right) */
+      .info-icon:hover + .tooltip {
+        display: block;
+        left: 110%; /* Position tooltip to the right */
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      /* Tooltip positioned to the left */
+      .info-icon.tooltip-left:hover + .tooltip {
+        display: block;
+        right: 110%; /* Position tooltip to the left */
+        left: auto;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
         /* Hover effect */
       .info-icon:hover {
-        background-color: #007bff;
+        background-color: #9b8bf4;
+        color: #ffffff; /* White 'i' on hover */
+        border-color: #9b8bf4; /* Blue border on hover */
       }
     </style>
   </head>
-  <body style="background-color: #90d8b2">
+  <body style="background-color: white; border: 3px solid #90d8b2;">
     <main>
-      <h1><b>AccessiScan</b></h1>
-      <h2>What are the goals for your project?</h2>
-      <h3>I want my project to be accessible for users who need:</h3>
+      <img src="logo.png" alt="AccessiScan Logo" style="width: 80px; display: block; margin: 0 auto;"/>
+      <h2><b>What are the goals for your project?</b></h2>
       <!-- Selection Buttons -->
       <div id="selection-buttons">
         <div class="button-item">
+          <span class="info-icon" id="info-contrasting-colors">i</span>
           <button class="ant-btn selection-button" id="contrasting-colors-button">
             Contrasting Colors
           </button>
-          <span class="info-icon" id="info-contrasting-colors">i</span>
         </div>
       
         <div class="button-item">
           <button class="ant-btn selection-button" id="large-text-button">
             Large Text
           </button>
-          <span class="info-icon" id="info-large-text">i</span>
+          <span class="info-icon tooltip-left" id="info-large-text">i</span>
+          <div class="tooltip tooltip-left">Tooltip for Large Text</div> 
         </div>
       
         <div class="button-item">
+          <span class="info-icon" id="info-labeled-images">i</span>
           <button class="ant-btn selection-button" id="labeled-images-button">
             Labeled Images
-        </button>
-        <span class="info-icon" id="info-labeled-images">i</span>
+          </button>
         </div>
       
         <div class="button-item">
@@ -175,8 +220,8 @@
         </div>
       
         <div class="button-item">
-          <button class="ant-btn selection-button" id="other-button-2">Other</button>
           <span class="info-icon" id="info-other-button-2">i</span>
+          <button class="ant-btn selection-button" id="other-button-2">Other</button>
         </div>
       
         <div class="button-item">
