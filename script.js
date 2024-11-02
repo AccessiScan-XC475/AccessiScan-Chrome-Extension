@@ -8,18 +8,21 @@ document.getElementById("contrasting-colors-button").addEventListener("click", (
     selection = "Contrasting Colors";
     updateButtonState("contrasting-colors-button");
     msgs.clearAll();
+    performScan(selection); //scan when user selects this button
   });
   
 document.getElementById("large-text-button").addEventListener("click", () => {
     selection = "Large Text";
     updateButtonState("large-text-button");
     msgs.clearAll();
+    performScan(selection); //scan when user selects this button
 });
   
 document.getElementById("labeled-images-button").addEventListener("click", () => {
     selection = "Labeled Images";
     updateButtonState("labeled-images-button");
     msgs.clearAll();
+    performScan(selection); //scan when user selects this button
 });
   
 // Event listeners for "other" buttons
@@ -33,17 +36,6 @@ otherButtons.forEach((buttonId) => {
       msgs.hideNotImplementedMessage();
       msgs.showOtherMessage(); // Show the other message when an "Other" button is clicked
     });
-});
-  
-// Event listener for the "Scan" button
-document.getElementById("captureDom").addEventListener("click", () => {
-    // Check if a scan type is selected before proceeding
-    if (selection !== "") {
-      performScan(selection);
-    } else {
-      // If no selection is made, show the error message
-      msgs.showErrorMessage();
-    }
 });
 
 // Function to update button state
