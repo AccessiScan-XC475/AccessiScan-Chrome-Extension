@@ -8,18 +8,21 @@ document.getElementById("contrasting-colors-button").addEventListener("click", (
     selection = "Contrasting Colors";
     updateButtonState("contrasting-colors-button");
     msgs.clearAll();
+    performScan(selection); //scan when user selects this button
   });
   
 document.getElementById("large-text-button").addEventListener("click", () => {
     selection = "Large Text";
     updateButtonState("large-text-button");
     msgs.clearAll();
+    performScan(selection); //scan when user selects this button
 });
   
 document.getElementById("labeled-images-button").addEventListener("click", () => {
     selection = "Labeled Images";
     updateButtonState("labeled-images-button");
     msgs.clearAll();
+    performScan(selection); //scan when user selects this button
 });
   
 // Event listeners for "other" buttons
