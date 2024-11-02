@@ -37,17 +37,6 @@ otherButtons.forEach((buttonId) => {
       msgs.showOtherMessage(); // Show the other message when an "Other" button is clicked
     });
 });
-  
-// Event listener for the "Scan" button
-document.getElementById("captureDom").addEventListener("click", () => {
-    // Check if a scan type is selected before proceeding
-    if (selection !== "") {
-      performScan(selection);
-    } else {
-      // If no selection is made, show the error message
-      msgs.showErrorMessage();
-    }
-});
 
 // Function to update button state
 function updateButtonState(selectedButtonId) {
