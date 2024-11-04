@@ -127,6 +127,9 @@ function performScan(scanType) {
             case "Large Text":
               apiEndpoint = "/api/scan-large-text";
               break;
+            case "Labeled Images":
+              apiEndpoint = "/api/scan-images";
+              break;
             default:
               msgs.showNotImplementedMessage();
               return;
@@ -161,7 +164,18 @@ function performScan(scanType) {
                 function: highlightInaccessibleElements,
                 args: [data.inaccessible_elements]  // Pass inaccessible elements to the function
               });
-            }
+              } // Inside performScan after the fetch
+              else if (scanType === "Labeled Images") {
+                document.getElementById("image-score-display").style.visibility = "visible";
+                // Prepare the output in the desired format
+                const outputText = `Images with alt text: ${imagesWithAlt} / Total images: ${totalImages}`;
+                
+                // Update the display with the formatted output
+                document.getElementById("alt_text_output").innerHTML = outputText;
+            
+                // Make sure the display element is visible
+                console.log("Labeled Images scan complete. Output:", outputText);
+            }            
             })
             .catch((err) => console.error(err));
         }

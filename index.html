@@ -111,6 +111,14 @@
         font-size: 25px;
       }
 
+      #image-score-display {
+        visibility: hidden;
+        padding: 0.1rem;
+        margin: 0.2rem;
+        font-weight: 600;
+        font-size: 25px;
+      }
+
       h1, h2, h3 {
         font-family: "Poppins", sans-serif;
       }
@@ -189,10 +197,11 @@
         </div>
       
         <div class="button-item">
-          <span class="info-icon" id="info-labeled-images">i</span>
           <button class="ant-btn selection-button" id="labeled-images-button">
             Labeled Images
           </button>
+          <span class="info-icon" id="info-labeled-images">i</span>
+          <div class = "tooltip tooltip-left">Tooltip for Labeled Images</div>
         </div>
       
         <div class="button-item">
@@ -231,6 +240,8 @@
         "
       >
         <p id="score-display"><span id="score"></span>/100</p>
+        <p id="image-score-display" style="visibility: hidden;">
+          <span id="alt_text_output"></span></p>
       </div>
     </main>
     <script type="module" src="script.js"></script>
