@@ -112,6 +112,27 @@ document.getElementById("clear-button").addEventListener("click", function() {
   }
 });
 
+//score range
+function createScoreGradient(score) {
+  const gradientContainer = document.getElementById("gradient-container");
+  const arrow = document.getElementById("score-arrow");
+
+  // Calculates arrow position based on score (0-100)
+  const arrowPosition = (score / 100) * 100; 
+
+  // Applies arrow position as a percentage
+  arrow.style.left = `${arrowPosition}%`;
+
+  // Applies gradient colors
+  gradientContainer.style.background = 
+      "linear-gradient(to right, red, yellow, green)";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const score = 5; // will fetch later
+  createScoreGradient(score);
+});
+
 // Unified function to perform the scan based on the selection
 function performScan(scanType) {
  // Hide the "not implemented" and "other" messages by default
