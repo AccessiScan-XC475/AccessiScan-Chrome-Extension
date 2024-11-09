@@ -103,6 +103,7 @@ document.getElementById("clear-button").addEventListener("click", function() {
   document.getElementById("score-display").style.visibility = "hidden";
   document.getElementById("score").innerHTML = ""; // Clear the score
   document.getElementById("accessiscan-link").style.visibility = "hidden";
+  clearHighlights();
 
   // Deselect any selected button
   const selectedButton = document.querySelector(".selection-button.selected");
