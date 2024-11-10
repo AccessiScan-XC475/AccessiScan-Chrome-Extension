@@ -105,18 +105,24 @@
 
       #score-display {
         visibility: hidden;
-        padding: 0.1rem;
-        margin: 0.2rem;
+        padding: 0.5rem;
+        margin: 1rem;
         font-weight: 600;
         font-size: 25px;
+        position: fixed;
+        bottom: 20px;   /* Adjust bottom position */
+        z-index: 1000;
       }
 
       #image-score-display {
         visibility: hidden;
-        padding: 0.1rem;
-        margin: 0.2rem;
+        padding: 0.5rem;
+        margin: 1rem;
         font-weight: 600;
         font-size: 25px;
+        position: fixed;
+        bottom: 70px;   /* Adjust bottom position */
+        z-index: 1000;
       }
 
       h1, h2, h3 {
@@ -173,6 +179,7 @@
         color: #ffffff; /* White 'i' on hover */
         border-color: #9b8bf4; /* Blue border on hover */
       }
+      
     </style>
   </head>
   <body style="background-color: white; border: 3px solid #90d8b2;">
@@ -239,9 +246,7 @@
           justify-content: center;
         "
       >
-        <p id="score-display"><span id="score"></span>/100</p>
-        <p id="image-score-display" style="visibility: hidden;">
-          <span id="alt_text_output"></span></p>
+      <p id="score-display"><span id="score"></span></p>
       </div>
     </main>
     <script type="module" src="script.js"></script>
