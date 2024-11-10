@@ -189,7 +189,11 @@ function performScan(scanType) {
               document.getElementById("score-display").style.visibility = "visible";
               document.getElementById("score").innerHTML = data.score;
               createScoreGradient(data.score);
+              
+              // Show score bar
               document.getElementById("score-bar").style.visibility = "visible";
+              // Show the clear button
+              document.getElementById("clear-button").style.display = "block";
 
               // Make the AccessiScan link visible
               document.getElementById("accessiscan-link").style.visibility = "visible";
