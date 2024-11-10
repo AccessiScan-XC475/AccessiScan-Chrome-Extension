@@ -104,6 +104,7 @@ document.getElementById("clear-button").addEventListener("click", function() {
   document.getElementById("score").innerHTML = ""; // Clear the score
   document.getElementById("accessiscan-link").style.visibility = "hidden";
   document.getElementById("score-bar").style.visibility = "hidden";
+  document.getElementById("score-message").style.visibility = "hidden";
   clearHighlights();
 
   // Deselect any selected button
@@ -133,6 +134,31 @@ document.addEventListener("DOMContentLoaded", () => {
   const score = 5; // will fetch later
   createScoreGradient(score);
 });
+
+// Score feedback message
+function displayScoreMessage(scanType, score) {
+  const scoreMessageElement = document.getElementById("score-message");
+  
+  // Determine the message based on scan type and score
+  let message = "";
+
+  if (scanType === "Contrasting Colors") {
+      if (score < 100) {
+          message = "The highlighted elements don't satisfy the 4.5:1 rgb ratio for text color and its background color. Adjust the rgb values in the highlighted elements to improve your score.";
+      } else {
+          message = "Great job!";
+      }
+  } else if (scanType === "Large Text") {
+      if (score < 100) {
+          message = "The highlighted elements are less than 16 point font. Increase the size font for these elements to improve your score.";
+      } else {
+          message = "Great job!";
+      }
+  }
+
+  // Set the message in the DOM
+  scoreMessageElement.textContent = message;
+}
 
 // Unified function to perform the scan based on the selection
 function performScan(scanType) {
@@ -187,9 +213,11 @@ function performScan(scanType) {
             .then((res) => res.json())
             .then((data) => {
               document.getElementById("score-display").style.visibility = "visible";
+              document.getElementById("score-message").style.visibility = "visible";
               document.getElementById("score").innerHTML = data.score;
               createScoreGradient(data.score);
-              
+              displayScoreMessage(selection, data.score);
+
               // Show score bar
               document.getElementById("score-bar").style.visibility = "visible";
               // Show the clear button

@@ -17,7 +17,7 @@
       html,
       body {
         width: 500px;
-        height: 600px;
+        height: 700px;
         margin: 0;
         padding: 0;
         overflow: hidden; /* Prevents scrollbars */
@@ -126,7 +126,8 @@
       #score-display {
         visibility: hidden;
         padding: 0.1rem;
-        margin: 40px 0 0;
+        margin-top: 60px;
+        margin-bottom: 20px;
         font-weight: 600;
         font-size: 40px;
         color: #55BB68;
@@ -139,7 +140,7 @@
         background: linear-gradient(to right, red, yellow, green);
         position: relative;
         border-radius: 10px;
-        margin-top: 20px;
+        margin-top: 40px;
         margin-bottom: 20px;
       }
 
@@ -152,6 +153,13 @@
         border-right: 10px solid transparent;
         border-top: 10px solid black; /* Arrow color */
       }
+
+      #score-message {
+        margin-top: 15px; /* Add space between the gradient and message */
+        font-size: 16px;
+        color: #333;
+        text-align: center;
+}
 
       #accessiscan-link {
         font-size: 16pt;
@@ -281,9 +289,10 @@
       <div id="score-bar">
         <div id="score-arrow"></div>
       </div>
+      <div id="score-message"></div>
       <div id="accessiscan-link" style="text-align: center; margin-top: 10px; visibility: hidden;">
         <a href="https://accessiscan.vercel.app/" target="_blank" style="color: #196CAD; font-weight: bold; text-decoration: underline;">
-          Learn more about improving accessibility
+          Click here to learn more about improving accessibility
         </a>
       </div>
       <div style="text-align: center; margin-top: 10px;">
