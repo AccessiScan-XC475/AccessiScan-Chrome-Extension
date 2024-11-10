@@ -103,6 +103,7 @@ document.getElementById("clear-button").addEventListener("click", function() {
   document.getElementById("score-display").style.visibility = "hidden";
   document.getElementById("score").innerHTML = ""; // Clear the score
   document.getElementById("accessiscan-link").style.visibility = "hidden";
+  document.getElementById("score-bar").style.visibility = "hidden";
   clearHighlights();
 
   // Deselect any selected button
@@ -114,7 +115,7 @@ document.getElementById("clear-button").addEventListener("click", function() {
 
 //score range
 function createScoreGradient(score) {
-  const gradientContainer = document.getElementById("gradient-container");
+  const gradientContainer = document.getElementById("score-bar");
   const arrow = document.getElementById("score-arrow");
 
   // Calculates arrow position based on score (0-100)
@@ -187,6 +188,8 @@ function performScan(scanType) {
             .then((data) => {
               document.getElementById("score-display").style.visibility = "visible";
               document.getElementById("score").innerHTML = data.score;
+              createScoreGradient(data.score);
+              document.getElementById("score-bar").style.visibility = "visible";
 
               // Make the AccessiScan link visible
               document.getElementById("accessiscan-link").style.visibility = "visible";
