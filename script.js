@@ -97,6 +97,20 @@ document.getElementById('info-labeled-images').addEventListener('mouseenter', (e
 
 document.getElementById('info-labeled-images').addEventListener('mouseleave', hideTooltip);
 
+//clear button
+document.getElementById("clear-button").addEventListener("click", function() {
+  // Hide the score display and accessiscan link
+  document.getElementById("score-display").style.visibility = "hidden";
+  document.getElementById("score").innerHTML = ""; // Clear the score
+  document.getElementById("accessiscan-link").style.visibility = "hidden";
+
+  // Deselect any selected button
+  const selectedButton = document.querySelector(".selection-button.selected");
+  if (selectedButton) {
+      selectedButton.classList.remove("selected");
+  }
+});
+
 // Unified function to perform the scan based on the selection
 function performScan(scanType) {
  // Hide the "not implemented" and "other" messages by default
@@ -154,6 +168,10 @@ function performScan(scanType) {
             .then((data) => {
               document.getElementById("score-display").style.visibility = "visible";
               document.getElementById("score").innerHTML = data.score;
+
+              // Make the AccessiScan link visible
+              document.getElementById("accessiscan-link").style.visibility = "visible";
+
               console.log("Score:", data.score);
               console.log("Inaccessible elements:", data.inaccessible_elements);
 
