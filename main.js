@@ -4,6 +4,8 @@ import {
   highlightInaccessibleElements,
   clearHighlights,
 } from "./utils/highlight.js";
+import { createScoreGradient, displayScoreMessage } from "./utils/score.js";
+import { showTooltip, hideTooltip } from "./utils/tooltip.js";
 
 let selection = "";
 
@@ -73,22 +75,6 @@ const tooltips = {
     "This button checks if images have labels, which improves accessibility for screen reader users.",
 };
 
-// Get the tooltip element
-const tooltip = document.getElementById("tooltip");
-
-// Function to show the tooltip
-function showTooltip(event, message) {
-  tooltip.style.display = "block";
-  tooltip.textContent = message;
-  tooltip.style.left = `${event.pageX + 10}px`;
-  tooltip.style.top = `${event.pageY + 10}px`;
-}
-
-// Function to hide the tooltip
-function hideTooltip() {
-  tooltip.style.display = "none";
-}
-
 // Add event listeners to info icons
 document
   .getElementById("info-contrasting-colors")
@@ -137,58 +123,10 @@ document.getElementById("clear-button").addEventListener("click", function () {
   }
 });
 
-//score range
-function createScoreGradient(score) {
-  const gradientContainer = document.getElementById("score-bar");
-  const arrow = document.getElementById("score-arrow");
-
-  // Calculates arrow position based on score (0-100)
-  const arrowPosition = (score / 100) * 100;
-
-  // Applies arrow position as a percentage
-  arrow.style.left = `${arrowPosition}%`;
-
-  // Applies gradient colors
-  gradientContainer.style.background =
-    "linear-gradient(to right, red, yellow, green)";
-}
-
 document.addEventListener("DOMContentLoaded", () => {
   const score = 5; // will fetch later
   createScoreGradient(score);
 });
-
-// Score feedback message
-function displayScoreMessage(scanType, score) {
-  const scoreMessageElement = document.getElementById("score-message");
-
-  // Determine the message based on scan type and score
-  let message = "";
-
-  if (scanType === "Contrasting Colors") {
-    if (score < 100) {
-      message =
-        "The highlighted elements don't satisfy the 4.5:1 rgb ratio for text color and its background color. Adjust the rgb values in the highlighted elements to improve your score.";
-    } else {
-      message = "Great job!";
-    }
-  } else if (scanType === "Large Text") {
-    if (score < 100) {
-      message =
-        "The highlighted elements are less than 16 point font. Increase the size font for these elements to improve your score.";
-    } else {
-      message = "Great job!";
-    }
-  }
-  confetti({
-    particleCount: 100, // Number of confetti particles
-    spread: 70, // Spread of the confetti
-    origin: { x: 0.5, y: 0.5 }, // Origin of the confetti (center of the screen)
-  });
-
-  // Set the message in the DOM
-  scoreMessageElement.textContent = message;
-}
 
 // Unified function to perform the scan based on the selection
 function performScan(scanType) {
