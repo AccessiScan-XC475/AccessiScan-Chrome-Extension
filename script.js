@@ -141,6 +141,9 @@ function performScan(scanType) {
             case "Large Text":
               apiEndpoint = "/api/scan-large-text";
               break;
+            case "Labeled Images":
+              apiEndpoint = "/api/scan-images";
+              break;
             default:
               msgs.showNotImplementedMessage();
               return;
@@ -178,7 +181,7 @@ function performScan(scanType) {
                 target: { tabId: activeTab.id },
                 function: highlightInaccessibleElements,
                 args: [data.inaccessible_elements]  // Pass inaccessible elements to the function
-              });
+              }); 
             }
             })
             .catch((err) => console.error(err));

@@ -127,7 +127,21 @@
         padding: 0.1rem;
         margin: 20px 0 0;
         font-weight: 600;
-        font-size: 25px;
+        font-size: 20px;
+        position: fixed;
+        bottom: 20px;   /* Adjust bottom position */
+        z-index: 1000;
+      }
+
+      #image-score-display {
+        visibility: hidden;
+        padding: 0.5rem;
+        margin: 1rem;
+        font-weight: 600;
+        font-size: 20px;
+        position: fixed;
+        bottom: 70px;   /* Adjust bottom position */
+        z-index: 1000;
       }
 
       #accessiscan-link {
@@ -188,6 +202,7 @@
         color: #ffffff; /* White 'i' on hover */
         border-color: #9b8bf4; /* Blue border on hover */
       }
+      
     </style>
   </head>
   <body style="background-color: white; border: 3px solid #90d8b2;">
@@ -212,10 +227,11 @@
         </div>
       
         <div class="button-item">
-          <span class="info-icon" id="info-labeled-images">i</span>
           <button class="ant-btn selection-button" id="labeled-images-button">
             Labeled Images
           </button>
+          <span class="info-icon" id="info-labeled-images">i</span>
+          <div class = "tooltip tooltip-left">Tooltip for Labeled Images</div>
         </div>
       
         <div class="button-item">
@@ -253,7 +269,7 @@
           justify-content: center;
         "
       >
-        <p id="score-display"><span id="score"></span>/100</p>
+      <p id="score-display"><span id="score"></span></p>
       </div>
       <div id="accessiscan-link" style="text-align: center; margin-top: 10px; visibility: hidden;">
         <a href="https://accessiscan.vercel.app/" target="_blank" style="color: #196CAD; font-weight: bold; text-decoration: underline;">
