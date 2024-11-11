@@ -14,51 +14,64 @@
     />
     <link href="styles.css" rel="stylesheet" />
   </head>
-  <body style="background-color: white; border: 3px solid #90d8b2;">
+  <body style="background-color: white; border: 3px solid #90d8b2">
     <main>
-      <img src="logo.png" alt="AccessiScan Logo" style="width: 80px; display: block; margin: 0 auto;"/>
+      <img
+        src="logo.png"
+        alt="AccessiScan Logo"
+        style="width: 80px; display: block; margin: 0 auto"
+      />
       <h2><b>What are the goals for your project?</b></h2>
       <!-- Selection Buttons -->
       <div id="selection-buttons">
         <div class="button-item">
           <span class="info-icon" id="info-contrasting-colors">i</span>
-          <button class="ant-btn selection-button" id="contrasting-colors-button">
+          <button
+            class="ant-btn selection-button"
+            id="contrasting-colors-button"
+          >
             Contrasting Colors
           </button>
         </div>
-      
+
         <div class="button-item">
           <button class="ant-btn selection-button" id="large-text-button">
             Large Text
           </button>
           <span class="info-icon tooltip-left" id="info-large-text">i</span>
-          <div class="tooltip tooltip-left">Tooltip for Large Text</div> 
+          <div class="tooltip tooltip-left">Tooltip for Large Text</div>
         </div>
-      
+
         <div class="button-item">
           <button class="ant-btn selection-button" id="labeled-images-button">
             Labeled Images
           </button>
           <span class="info-icon" id="info-labeled-images">i</span>
-          <div class = "tooltip tooltip-left">Tooltip for Labeled Images</div>
+          <div class="tooltip tooltip-left">Tooltip for Labeled Images</div>
         </div>
-      
+
         <div class="button-item">
-          <button class="ant-btn selection-button" id="other-button-1">Other</button>
+          <button class="ant-btn selection-button" id="other-button-1">
+            Other
+          </button>
           <span class="info-icon" id="info-other-button-1">i</span>
         </div>
-      
+
         <div class="button-item">
           <span class="info-icon" id="info-other-button-2">i</span>
-          <button class="ant-btn selection-button" id="other-button-2">Other</button>
+          <button class="ant-btn selection-button" id="other-button-2">
+            Other
+          </button>
         </div>
-      
+
         <div class="button-item">
-          <button class="ant-btn selection-button" id="other-button-3">Other</button>
+          <button class="ant-btn selection-button" id="other-button-3">
+            Other
+          </button>
           <span class="info-icon" id="info-other-button-3">i</span>
         </div>
       </div>
-      
+
       <div id="tooltip" class="tooltip"></div>
       <p id="error-message" style="display: none; text-align: center">
         Please select an accessiblity category :)
@@ -84,18 +97,23 @@
         <div id="score-arrow"></div>
       </div>
       <div id="score-message"></div>
-      <div id="accessiscan-link" style="text-align: center; margin-top: 10px; visibility: hidden;">
-        <a href="https://accessiscan.vercel.app/" target="_blank" style="color: #196CAD; font-weight: bold; text-decoration: underline;">
+      <div
+        id="accessiscan-link"
+        style="text-align: center; margin-top: 10px; visibility: hidden"
+      >
+        <a
+          href="https://accessiscan.vercel.app/"
+          target="_blank"
+          style="color: #196cad; font-weight: bold; text-decoration: underline"
+        >
           Click here to learn more about improving accessibility
         </a>
       </div>
-      <div style="text-align: center; margin-top: 10px;">
-        <button id="clear-button" >
-          Clear
-        </button>
+      <div style="text-align: center; margin-top: 10px">
+        <button id="clear-button">Clear</button>
       </div>
     </main>
     <script src="confetti.js"></script>
-    <script type="module" src="script.js"></script>
+    <script type="module" src="main.js"></script>
   </body>
 </html>
