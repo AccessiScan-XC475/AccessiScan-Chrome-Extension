@@ -1,0 +1,211 @@
+/* Setting the dimensions of the popup */
+html,
+body {
+  width: 500px;
+  height: 750px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevents scrollbars */
+  font-family: "Poppins", sans-serif;
+}
+
+main {
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+h1,
+h2 {
+  text-align: center;
+  margin-top: 20px;
+  color: #196cad;
+}
+
+#selection-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.button-item {
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between;
+        height: 100%; */
+}
+
+.button-item .info-icon {
+  font-size: 14px;
+}
+
+.button-item:nth-child(odd) .info-icon {
+  order: -1;
+  margin-right: 5px;
+}
+
+.button-item:nth-child(even) .info-icon {
+  margin-left: 5px;
+}
+
+button {
+  width: 200px;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #6a5acd;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+}
+/* Selection button styling */
+.selection-button {
+  max-width: 150px;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  height: 100%;
+  white-space: normal;
+  border-color: #9b8bf4;
+  border-width: 2px;
+  word-wrap: break-word;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover color for selection buttons */
+.selection-button:hover {
+  background-color: #8b95f6;
+  color: white;
+  border-color: #9b8bf4;
+}
+
+/* Selected state for selection buttons */
+.selection-button.selected {
+  background-color: #8b95f6;
+  color: white;
+  border-color: #9b8bf4;
+}
+
+/* Styling for scan button */
+#clear-button {
+  display: none;
+  position: relative;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 40px;
+  z-index: 100;
+  background-color: white !important;
+  border-color: #9b8bf4;
+  color: black;
+}
+/* Setting hover color for scan button */
+#clear-button:hover {
+  background-color: #8b95f6 !important;
+  color: white;
+  border-color: #9b8bf4;
+}
+
+#score-display {
+  visibility: hidden;
+  padding: 0.1rem;
+  margin-top: 60px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  font-size: 40px;
+  color: #55bb68;
+}
+
+#score-bar {
+  visibility: hidden;
+  width: 100%;
+  height: 20px;
+  background: linear-gradient(to right, red, yellow, green);
+  position: relative;
+  border-radius: 10px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+#score-arrow {
+  position: absolute;
+  top: -10px;
+  height: 0;
+  width: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid black; /* Arrow color */
+}
+
+#score-message {
+  margin-top: 15px; /* Add space between the gradient and message */
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+}
+
+#accessiscan-link {
+  font-size: 16pt;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Poppins", sans-serif;
+}
+/* Tooltip hidden by default */
+.tooltip {
+  display: none;
+  position: absolute;
+  background-color: #196cad; /* Set background color */
+  color: #fff; /* Set text color to white */
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 16px; /* Set font size to 16px */
+  z-index: 1000;
+}
+/* Info icon style */
+.info-icon {
+  font-size: 14px;
+  font-weight: bold;
+  color: #808080; /* Gray color for the 'i' */
+  background-color: transparent; /* Transparent background */
+  border: 2px solid #808080; /* Gray border */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+/* Default tooltip position (appears on the right) */
+.info-icon:hover + .tooltip {
+  display: block;
+  left: 110%; /* Position tooltip to the right */
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Tooltip positioned to the left */
+.info-icon.tooltip-left:hover + .tooltip {
+  display: block;
+  right: 110%; /* Position tooltip to the left */
+  left: auto;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Hover effect */
+.info-icon:hover {
+  background-color: #9b8bf4;
+  color: #ffffff; /* White 'i' on hover */
+  border-color: #9b8bf4; /* Blue border on hover */
+}
