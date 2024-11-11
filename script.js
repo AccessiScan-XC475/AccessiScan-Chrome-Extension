@@ -160,6 +160,7 @@ function displayScoreMessage(scanType, score) {
     } else {
         message = "Great job!";
     }
+  }
 
   // Set the message in the DOM
   scoreMessageElement.textContent = message;
