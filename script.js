@@ -154,7 +154,12 @@ function displayScoreMessage(scanType, score) {
       } else {
           message = "Great job!";
       }
-  }
+  } else if (scanType === "Labeled Images") {
+    if (score < 100) {
+        message = "The highlighted elements are images that are not labeled. Add labels to these images to improve your score.";
+    } else {
+        message = "Great job!";
+    }
 
   // Set the message in the DOM
   scoreMessageElement.textContent = message;
@@ -189,9 +194,6 @@ function performScan(scanType) {
               break;
             case "Large Text":
               apiEndpoint = "/api/scan-large-text";
-              break;
-            case "Labeled Images":
-              apiEndpoint = "/api/scan-images";
               break;
             default:
               msgs.showNotImplementedMessage();
@@ -238,7 +240,7 @@ function performScan(scanType) {
                 target: { tabId: activeTab.id },
                 function: highlightInaccessibleElements,
                 args: [data.inaccessible_elements]  // Pass inaccessible elements to the function
-              }); 
+              });
             }
             })
             .catch((err) => console.error(err));
