@@ -12,261 +12,66 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
-    <style>
-      /* Setting the dimensions of the popup */
-      html,
-      body {
-        width: 500px;
-        height: 750px;
-        margin: 0;
-        padding: 0;
-        overflow: hidden; /* Prevents scrollbars */
-        font-family: "Poppins", sans-serif;
-      }
-
-      main {
-        padding: 20px;
-        box-sizing: border-box;
-      }
-
-      h1, h2 {
-        text-align: center;
-        margin-top: 20px;
-        color: #196CAD;
-      }
-
-      #selection-buttons {
-        display: grid;
-        grid-template-columns: 1fr 1fr; 
-        gap: 10px; 
-
-      }
-
-      .button-item {
-        display: flex;
-        align-items: center;
-        /* justify-content: space-between;
-        height: 100%; */
-      }
-
-      .button-item .info-icon {
-        font-size: 14px;
-      }
-
-      .button-item:nth-child(odd) .info-icon {
-        order: -1; 
-        margin-right: 5px;
-      }
-
-      .button-item:nth-child(even) .info-icon {
-        margin-left: 5px;
-      }
-
-      button {
-        width: 200px; 
-        padding: 10px;
-        font-size: 16px;
-        border: 2px solid #6a5acd; 
-        background-color: white;
-        color: black;
-        cursor: pointer;
-      }
-      /* Selection button styling */
-      .selection-button {
-        max-width: 150px;
-        width: 100%; 
-        padding: 10px;
-        font-size: 16px;
-        height: 100%;
-        white-space: normal; 
-        border-color: #9b8bf4;
-        border-width: 2px;
-        word-wrap: break-word; 
-        display: flex;
-        align-items: center; 
-        justify-content: center;
-        border-radius: 15px;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-      }
-
-      /* Hover color for selection buttons */
-      .selection-button:hover {
-        background-color: #8b95f6;
-        color: white;
-        border-color: #9b8bf4;
-      }
-
-      /* Selected state for selection buttons */
-      .selection-button.selected {
-        background-color: #8b95f6;
-        color: white;
-        border-color: #9b8bf4;
-      }
-
-      /* Styling for scan button */
-      #clear-button {
-        display: none;
-        position: relative;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        margin-top: 40px;
-        z-index: 100;
-        background-color: white !important;
-        border-color: #9b8bf4;
-        color: black;
-      }
-      /* Setting hover color for scan button */
-      #clear-button:hover {
-        background-color: #8b95f6 !important;
-        color: white;
-        border-color: #9b8bf4;
-      }
-
-      #score-display {
-        visibility: hidden;
-        padding: 0.1rem;
-        margin-top: 60px;
-        margin-bottom: 20px;
-        font-weight: 600;
-        font-size: 40px;
-        color: #55BB68;
-      }
-
-      #score-bar {
-        visibility: hidden;
-        width: 100%;
-        height: 20px;
-        background: linear-gradient(to right, red, yellow, green);
-        position: relative;
-        border-radius: 10px;
-        margin-top: 40px;
-        margin-bottom: 20px;
-      }
-
-      #score-arrow {
-        position: absolute;
-        top: -10px;
-        height: 0;
-        width: 0;
-        border-left: 10px solid transparent;
-        border-right: 10px solid transparent;
-        border-top: 10px solid black; /* Arrow color */
-      }
-
-      #score-message {
-        margin-top: 15px; /* Add space between the gradient and message */
-        font-size: 16px;
-        color: #333;
-        text-align: center;
-}
-
-      #accessiscan-link {
-        font-size: 16pt;
-      }
-
-      h1, h2, h3 {
-        font-family: "Poppins", sans-serif;
-      }
-        /* Tooltip hidden by default */
-      .tooltip {
-        display: none;
-        position: absolute;
-        background-color: #196CAD; /* Set background color */
-        color: #fff; /* Set text color to white */
-        padding: 8px;
-        border-radius: 5px;
-        font-size: 16px; /* Set font size to 16px */
-        z-index: 1000;
-      }
-        /* Info icon style */
-      .info-icon {
-        font-size: 14px;
-        font-weight: bold;
-        color: #808080; /* Gray color for the 'i' */
-        background-color: transparent; /* Transparent background */
-        border: 2px solid #808080; /* Gray border */
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        cursor: pointer;
-        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-      }
-
-      /* Default tooltip position (appears on the right) */
-      .info-icon:hover + .tooltip {
-        display: block;
-        left: 110%; /* Position tooltip to the right */
-        top: 50%;
-        transform: translateY(-50%);
-      }
-
-      /* Tooltip positioned to the left */
-      .info-icon.tooltip-left:hover + .tooltip {
-        display: block;
-        right: 110%; /* Position tooltip to the left */
-        left: auto;
-        top: 50%;
-        transform: translateY(-50%);
-      }
-
-        /* Hover effect */
-      .info-icon:hover {
-        background-color: #9b8bf4;
-        color: #ffffff; /* White 'i' on hover */
-        border-color: #9b8bf4; /* Blue border on hover */
-      }
-      
-    </style>
+    <link href="styles.css" rel="stylesheet" />
   </head>
-  <body style="background-color: white; border: 3px solid #90d8b2;">
+  <body style="background-color: white; border: 3px solid #90d8b2">
     <main>
-      <img src="logo.png" alt="AccessiScan Logo" style="width: 80px; display: block; margin: 0 auto;"/>
+      <img
+        src="logo.png"
+        alt="AccessiScan Logo"
+        style="width: 80px; display: block; margin: 0 auto"
+      />
       <h2><b>What are the goals for your project?</b></h2>
       <!-- Selection Buttons -->
       <div id="selection-buttons">
         <div class="button-item">
           <span class="info-icon" id="info-contrasting-colors">i</span>
-          <button class="ant-btn selection-button" id="contrasting-colors-button">
+          <button
+            class="ant-btn selection-button"
+            id="contrasting-colors-button"
+          >
             Contrasting Colors
           </button>
         </div>
-      
+
         <div class="button-item">
           <button class="ant-btn selection-button" id="large-text-button">
             Large Text
           </button>
           <span class="info-icon tooltip-left" id="info-large-text">i</span>
-          <div class="tooltip tooltip-left">Tooltip for Large Text</div> 
+          <div class="tooltip tooltip-left">Tooltip for Large Text</div>
         </div>
-      
+
         <div class="button-item">
           <button class="ant-btn selection-button" id="labeled-images-button">
             Labeled Images
           </button>
           <span class="info-icon" id="info-labeled-images">i</span>
-          <div class = "tooltip tooltip-left">Tooltip for Labeled Images</div>
+          <div class="tooltip tooltip-left">Tooltip for Labeled Images</div>
         </div>
-      
+
         <div class="button-item">
-          <button class="ant-btn selection-button" id="other-button-1">Other</button>
+          <button class="ant-btn selection-button" id="other-button-1">
+            Other
+          </button>
           <span class="info-icon" id="info-other-button-1">i</span>
         </div>
-      
+
         <div class="button-item">
           <span class="info-icon" id="info-other-button-2">i</span>
-          <button class="ant-btn selection-button" id="other-button-2">Other</button>
+          <button class="ant-btn selection-button" id="other-button-2">
+            Other
+          </button>
         </div>
-      
+
         <div class="button-item">
-          <button class="ant-btn selection-button" id="other-button-3">Other</button>
+          <button class="ant-btn selection-button" id="other-button-3">
+            Other
+          </button>
           <span class="info-icon" id="info-other-button-3">i</span>
         </div>
       </div>
-      
+
       <div id="tooltip" class="tooltip"></div>
       <p id="error-message" style="display: none; text-align: center">
         Please select an accessiblity category :)
@@ -292,17 +97,23 @@
         <div id="score-arrow"></div>
       </div>
       <div id="score-message"></div>
-      <div id="accessiscan-link" style="text-align: center; margin-top: 10px; visibility: hidden;">
-        <a href="https://accessiscan.vercel.app/" target="_blank" style="color: #196CAD; font-weight: bold; text-decoration: underline;">
+      <div
+        id="accessiscan-link"
+        style="text-align: center; margin-top: 10px; visibility: hidden"
+      >
+        <a
+          href="https://accessiscan.vercel.app/"
+          target="_blank"
+          style="color: #196cad; font-weight: bold; text-decoration: underline"
+        >
           Click here to learn more about improving accessibility
         </a>
       </div>
-      <div style="text-align: center; margin-top: 10px;">
-        <button id="clear-button" >
-          Clear
-        </button>
+      <div style="text-align: center; margin-top: 10px">
+        <button id="clear-button">Clear</button>
       </div>
     </main>
-    <script type="module" src="script.js"></script>
+    <script src="utils/confetti.js"></script>
+    <script type="module" src="main.js"></script>
   </body>
 </html>

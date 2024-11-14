@@ -4,13 +4,14 @@
   "description": "Scan your local projects and see its AccessiScore.",
   "version": "1.0",
   "action": {
-    "default_popup": "index.html"
+    "default_popup": "index.html",
+    "default_icon": "icon.png"
   },
   "permissions": ["activeTab", "scripting"],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["script.js"]
+      "js": ["main.js"]
     }
   ]
 }
