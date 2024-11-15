@@ -6,6 +6,7 @@ import {
 } from "./utils/highlight.js";
 import { createScoreGradient, displayScoreMessage } from "./utils/score.js";
 import { showTooltip, hideTooltip } from "./utils/tooltip.js";
+import { SCANNER, WEBSITE } from "./domain.js";
 
 let selection = "";
 
@@ -166,14 +167,11 @@ function performScan(scanType) {
               return;
           }
 
-          fetch(
-            `http://localhost:3000/api/accessibility-selection?name=${selection}`,
-            {
-              method: "POST",
-            },
-          );
+          fetch(`${WEBSITE}/api/accessibility-selection?name=${selection}`, {
+            method: "POST",
+          });
 
-          fetch(`http://localhost:4200${apiEndpoint}`, {
+          fetch(`${SCANNER}${apiEndpoint}`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
