@@ -15,26 +15,28 @@ export function createScoreGradient(score) {
 }
 
 // Score feedback message
-export function displayScoreMessage(scanType, score) {
+export function displayScoreMessage(scanType, data) {
   const scoreMessageElement = document.getElementById("score-message");
 
   // Determine the message based on scan type and score
   let message = "";
 
   if (scanType === "Contrasting Colors") {
-    if (score < 100) {
+    if (data.score < 100) {
       message =
         "The highlighted elements don't satisfy the 4.5:1 rgb ratio for text color and its background color. Adjust the rgb values in the highlighted elements to improve your score.";
     } else {
       message = "Great job!";
     }
   } else if (scanType === "Large Text") {
-    if (score < 100) {
+    if (data.score < 100) {
       message =
         "The highlighted elements are less than 16 point font. Increase the size font for these elements to improve your score.";
     } else {
       message = "Great job!";
     }
+  } else if (scanType == "Labeled Images") {
+    message = data.details;
   }
   confetti({
     particleCount: 100, // Number of confetti particles

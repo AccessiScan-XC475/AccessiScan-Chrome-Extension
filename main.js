@@ -186,7 +186,7 @@ function performScan(scanType) {
                 "visible";
               document.getElementById("score").innerHTML = data.score;
               createScoreGradient(data.score);
-              displayScoreMessage(selection, data.score);
+              displayScoreMessage(selection, data);
 
               // Show score bar
               document.getElementById("score-bar").style.visibility = "visible";
