@@ -142,7 +142,12 @@ function performScan(scanType) {
                 "visible";
               document.getElementById("score-message").style.visibility =
                 "visible";
-              document.getElementById("score").innerHTML = data.score;
+              if (scanType === "Labeled Images") {
+                document.getElementById("score").innerHTML =
+                  `${data.images_with_alt}/${data.total_images}`;
+              } else {
+                document.getElementById("score").innerHTML = `${data.score}%`;
+              }
               createScoreGradient(data.score);
               displayScoreMessage(selection, data);
 
