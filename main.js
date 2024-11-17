@@ -160,7 +160,8 @@ function performScan(scanType) {
 
               if (
                 scanType == "Contrasting Colors" ||
-                scanType == "Large Text"
+                scanType == "Large Text" ||
+                scanType == "Labeled Images"
               ) {
                 chrome.scripting.executeScript({
                   target: { tabId: activeTab.id },
