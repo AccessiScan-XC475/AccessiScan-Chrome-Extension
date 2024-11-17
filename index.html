@@ -57,53 +57,22 @@
           <span class="info-icon" id="info-line-spacing">i</span>
           <div class="tooltip tooltip-left">Tooltip for Line Spacing</div>
         </div>
-
-        <div class="button-item">
-          <button class="ant-btn selection-button" id="other-button-1">
-            Other
-          </button>
-          <span class="info-icon" id="info-other-button-1">i</span>
-        </div>
-
-        <div class="button-item">
-          <span class="info-icon" id="info-other-button-2">i</span>
-          <button class="ant-btn selection-button" id="other-button-2">
-            Other
-          </button>
-        </div>
-
-        <div class="button-item">
-          <button class="ant-btn selection-button" id="other-button-3">
-            Other
-          </button>
-          <span class="info-icon" id="info-other-button-3">i</span>
-        </div>
+        <div id="tooltip" class="tooltip"></div>
+        <p id="error-message" style="display: none; text-align: center">
+          Please select an accessiblity category :)
+        </p>
+        <p id="other-message" style="display: none; text-align: center">
+          Will be implemented later
+        </p>
+        <p id="not-implemented-message" style="display: none; text-align: center">
+          This scan type is not implemented yet
+        </p>
       </div>
-
-      <div id="tooltip" class="tooltip"></div>
-      <p id="error-message" style="display: none; text-align: center">
-        Please select an accessiblity category :)
-      </p>
-      <p id="other-message" style="display: none; text-align: center">
-        Will be implemented later
-      </p>
-      <p id="not-implemented-message" style="display: none; text-align: center">
-        This scan type is not implemented yet
-      </p>
-      <div
-        style="
-          display: flex;
-          margin: 0.25rem;
-          height: 30px;
-          align-items: center;
-          justify-content: center;
-        "
-      >
+      <div id="score-container">
         <p id="score-display"><span id="score"></span>%</p>
-      </div>
-      <div id="score-bar">
-        <div id="score-arrow"></div>
-      </div>
+        <div id="score-bar">
+          <div id="score-arrow"></div>
+        </div>
       <div id="score-message"></div>
       <div
         id="accessiscan-link"

@@ -45,19 +45,6 @@ document
     performScan(selection); //scan when user selects this button
   });
 
-// Event listeners for "other" buttons
-const otherButtons = ["other-button-1", "other-button-2", "other-button-3"];
-
-otherButtons.forEach((buttonId) => {
-  document.getElementById(buttonId).addEventListener("click", () => {
-    selection = "Other";
-    updateButtonState(buttonId);
-    msgs.hideErrorMessage();
-    msgs.hideNotImplementedMessage();
-    msgs.showOtherMessage(); // Show the other message when an "Other" button is clicked
-  });
-});
-
 // Function to update button state
 function updateButtonState(selectedButtonId) {
   // Remove highlights when different button is pressed
