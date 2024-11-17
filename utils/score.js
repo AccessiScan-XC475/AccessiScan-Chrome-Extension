@@ -24,7 +24,7 @@ export function displayScoreMessage(scanType, data) {
   let message = "";
 
   if (scanType === "Contrasting Colors") {
-    if (data.score < 90) {
+    if (data.score < 100) {
       message =
         "The highlighted elements don't satisfy the 4.5:1 rgb ratio for text color and its background color. Adjust the rgb values in the highlighted elements to improve your score.";
     } else {
@@ -32,7 +32,7 @@ export function displayScoreMessage(scanType, data) {
       playConfetti();
     }
   } else if (scanType === "Large Text") {
-    if (data.score < 90) {
+    if (data.score < 100) {
       message =
         "The highlighted elements are less than 16 point font. Increase the size font for these elements to improve your score.";
     } else {
@@ -47,6 +47,8 @@ export function displayScoreMessage(scanType, data) {
       message = "Great job!";
       playConfetti();
     }
+  } else if (scanType == "Labeled Images") {
+    message = data.details;
   }
 
   // Set the message in the DOM
