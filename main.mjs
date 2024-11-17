@@ -127,6 +127,9 @@ function performScan(scanType) {
 
           fetch(`${WEBSITE}/api/accessibility-selection?name=${selection}`, {
             method: "POST",
+          }).catch((e) => {
+            console.error("Could not update statistics");
+            console.error(e);
           });
 
           fetch(`${SCANNER}${apiEndpoint}`, {
@@ -175,7 +178,10 @@ function performScan(scanType) {
                 });
               }
             })
-            .catch((err) => console.error(err));
+            .catch((err) => {
+              console.error("Could not call scanner.");
+              console.error(err);
+            });
         }
       },
     );
