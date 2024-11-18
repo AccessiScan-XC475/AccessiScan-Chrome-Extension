@@ -5,7 +5,6 @@ import {
   clearHighlights,
 } from "./utils/highlight.js";
 import { createScoreGradient, displayScoreMessage } from "./utils/score.js";
-import { showTooltip, hideTooltip } from "./utils/tooltip.js";
 import { SCANNER, WEBSITE } from "./domain.js";
 
 let selection = "";
@@ -36,14 +35,12 @@ document
     performScan(selection); //scan when user selects this button
   });
 
-document
-  .getElementById("line-spacing-button")
-  .addEventListener("click", () => {
-    selection = "Line Spacing";
-    updateButtonState("line-spacing-button");
-    msgs.clearAll();
-    performScan(selection); //scan when user selects this button
-  });
+document.getElementById("line-spacing-button").addEventListener("click", () => {
+  selection = "Line Spacing";
+  updateButtonState("line-spacing-button");
+  msgs.clearAll();
+  performScan(selection); //scan when user selects this button
+});
 
 // Event listeners for "other" buttons
 const otherButtons = ["other-button-1", "other-button-2", "other-button-3"];
@@ -193,6 +190,9 @@ function performScan(scanType) {
 
           fetch(`${WEBSITE}/api/accessibility-selection?name=${selection}`, {
             method: "POST",
+          }).catch((e) => {
+            console.error("Could not update statistics");
+            console.error(e);
           });
 
           fetch(`${SCANNER}${apiEndpoint}`, {
@@ -208,7 +208,12 @@ function performScan(scanType) {
                 "visible";
               document.getElementById("score-message").style.visibility =
                 "visible";
-              document.getElementById("score").innerHTML = data.score;
+              if (scanType === "Labeled Images") {
+                document.getElementById("score").innerHTML =
+                  `${data.images_with_alt}/${data.total_images}`;
+              } else {
+                document.getElementById("score").innerHTML = `${data.score}%`;
+              }
               createScoreGradient(data.score);
               displayScoreMessage(selection, data);
 
@@ -227,9 +232,9 @@ function performScan(scanType) {
               if (
                 scanType == "Contrasting Colors" ||
                 scanType == "Large Text" ||
+                scanType == "Labeled Images" ||
                 scanType == "Line Spacing"
               ) {
-                console.log("test console log");
                 chrome.scripting.executeScript({
                   target: { tabId: activeTab.id },
                   function: highlightInaccessibleElements,
@@ -237,7 +242,10 @@ function performScan(scanType) {
                 });
               }
             })
-            .catch((err) => console.error(err));
+            .catch((err) => {
+              console.error("Could not call scanner.");
+              console.error(err);
+            });
         }
       },
     );

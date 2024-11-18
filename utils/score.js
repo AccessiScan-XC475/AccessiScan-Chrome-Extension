@@ -1,3 +1,5 @@
+import { playConfetti } from "./play-confetti.js";
+
 //score range
 export function createScoreGradient(score) {
   const gradientContainer = document.getElementById("score-bar");
@@ -27,6 +29,7 @@ export function displayScoreMessage(scanType, data) {
         "The highlighted elements don't satisfy the 4.5:1 rgb ratio for text color and its background color. Adjust the rgb values in the highlighted elements to improve your score.";
     } else {
       message = "Great job!";
+      playConfetti();
     }
   } else if (scanType === "Large Text") {
     if (data.score < 100) {
@@ -34,15 +37,19 @@ export function displayScoreMessage(scanType, data) {
         "The highlighted elements are less than 16 point font. Increase the size font for these elements to improve your score.";
     } else {
       message = "Great job!";
+      playConfetti();
+    }
+  } else if (scanType === "Labeled Images") {
+    if (data.images_with_alt !== data.total_images) {
+      message =
+        "Some of images are missing alt text. Add alt text to these image tags.";
+    } else {
+      message = "Great job!";
+      playConfetti();
     }
   } else if (scanType == "Labeled Images") {
     message = data.details;
   }
-  confetti({
-    particleCount: 100, // Number of confetti particles
-    spread: 70, // Spread of the confetti
-    origin: { x: 0.5, y: 0.5 }, // Origin of the confetti (center of the screen)
-  });
 
   // Set the message in the DOM
   scoreMessageElement.textContent = message;
