@@ -8,6 +8,8 @@ const tooltips = {
     "This button checks if the text size is large enough (at least size 16) for visually impaired users.",
   "info-labeled-images":
     "This button checks if images have labels, which improves accessibility for screen reader users.",
+  "info-line-spacing":
+    "This button checks if the space between lines has at least a 1.5 ratio of line height relative to font size per WCAG.",
 };
 
 // Add event listeners to info icons
@@ -39,4 +41,14 @@ document
 
 document
   .getElementById("info-labeled-images")
+  .addEventListener("mouseleave", hideTooltip);
+
+document
+  .getElementById("info-line-spacing")
+  .addEventListener("mouseenter", (event) => {
+    showTooltip(event, tooltips["info-line-spacing"]);
+  });
+
+document
+  .getElementById("info-line-spacing")
   .addEventListener("mouseleave", hideTooltip);
