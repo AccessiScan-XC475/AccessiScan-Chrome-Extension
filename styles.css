@@ -110,9 +110,10 @@ button {
 
 #score-display {
   visibility: hidden;
+  text-align: center;
   padding: 0.1rem;
-  margin-top: 60px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   font-weight: 600;
   font-size: 40px;
   color: #55bb68;
@@ -125,8 +126,8 @@ button {
   background: linear-gradient(to right, red, yellow, green);
   position: relative;
   border-radius: 10px;
-  margin-top: 40px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 #score-arrow {
