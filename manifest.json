@@ -1,13 +1,20 @@
 {
   "manifest_version": 3,
   "name": "AccessiScan Chrome Extension",
-  "description": "Scan your local projects and see its AccessiScore.",
+  "description": "Scan your projects and see how to improve its accessibility.",
   "version": "1.1",
   "action": {
     "default_popup": "index.html",
     "default_icon": "icon.png"
   },
-  "permissions": ["activeTab", "scripting"],
+  "permissions": ["activeTab", "scripting", "identity"],
+  "oauth2": {
+    "client_id": "Ov23li1gihMdqOFkMd5K",
+    "scopes": ["user"] 
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
