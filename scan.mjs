@@ -123,13 +123,6 @@ function performScan(scanType) {
               return;
           }
 
-          fetch(`${WEBSITE}/api/accessibility-selection?name=${selection}`, {
-            method: "POST",
-          }).catch((e) => {
-            console.error("Could not update statistics");
-            console.error(e);
-          });
-
           fetch(`${SCANNER}${apiEndpoint}`, {
             method: "POST",
             headers: {
