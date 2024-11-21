@@ -210,3 +210,13 @@ h3 {
   color: #ffffff; /* White 'i' on hover */
   border-color: #9b8bf4; /* Blue border on hover */
 }
+
+#profile-container {
+  position: relative;
+}
+
+#profile-container:hover #logout-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

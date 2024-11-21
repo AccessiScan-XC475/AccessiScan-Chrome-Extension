@@ -76,9 +76,99 @@ document.getElementById("clear-button").addEventListener("click", function () {
   }
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const score = 5; // will fetch later
-  createScoreGradient(score);
+document.addEventListener("DOMContentLoaded", async () => {
+  // Fetch the access token to check if the user is logged in
+  const { accessToken } = await chrome.storage.local.get("accessToken");
+
+  const githubLoginIcon = document.getElementById("github-login-icon");
+  const profileContainer = document.getElementById("profile-container");
+  const profilePicture = document.getElementById("profile-picture");
+  const logoutButton = document.getElementById("logout-button");
+
+  const resetToLoginState = () => {
+    profileContainer.style.display = "none"; // Hide profile container
+    githubLoginIcon.style.display = "block"; // Show GitHub login icon
+    logoutButton.style.display = "none"; // Hide logout button
+
+    // Add click event for login
+    githubLoginIcon.addEventListener("click", () => {
+        console.log("GitHub login button clicked.");
+        chrome.runtime.sendMessage({ action: "startGithubOAuth" });
+    });
+};
+
+
+  if (accessToken) {
+      console.log("User is logged in, fetching profile picture...");
+
+      // Fetch the user's profile picture from GitHub
+      const response = await fetch('https://api.github.com/user', {
+          headers: { Authorization: `Bearer ${accessToken}` }
+      });
+      const userData = await response.json();
+      const profilePictureUrl = userData.avatar_url;
+
+      // Set profile picture and show profile container
+      profileContainer.style.display = "block";
+      profilePicture.src = profilePictureUrl;
+
+      // Hide the GitHub login icon
+      githubLoginIcon.style.display = "none";
+
+      // Toggle logout button visibility on profile picture click
+      profilePicture.addEventListener("click", () => {
+          logoutButton.style.display = logoutButton.style.display === "none" ? "block" : "none";
+      });
+
+      // Handle logout button click
+      logoutButton.addEventListener("click", async () => {
+        console.log("Logout button clicked.");
+        const { accessToken } = await chrome.storage.local.get("accessToken");
+    
+        if (accessToken) {
+            try {
+                // Revoke token through the backend
+                const response = await fetch("http://localhost:4200/api/auth/github/revoke", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ token: accessToken }),
+                });
+                if (!response.ok) {
+                    throw new Error("Failed to revoke token");
+                }
+                console.log("Token revoked successfully.");
+            } catch (error) {
+                console.error("Failed to revoke token:", error);
+            }
+        }
+    
+        // Clear token and profile data
+        chrome.storage.local.remove(["accessToken", "profileData"], () => {
+            console.log("Access token and profile data cleared.");
+            resetToLoginState();
+            alert("You have been logged out.");
+        });
+    });
+    
+    
+    
+    
+  } else {
+      // User is not logged in - Show login icon
+      profileContainer.style.display = "none"; // Hide the profile container
+      githubLoginIcon.style.display = "block"; // Show the GitHub login icon
+
+      // Add click event to initiate login
+      githubLoginIcon.addEventListener("click", async () => {
+        const { accessToken } = await chrome.storage.local.get("accessToken");
+        if (!accessToken) {
+            console.log("Starting OAuth flow...");
+            chrome.runtime.sendMessage({ action: "startGithubOAuth" });
+        } else {
+            console.warn("Access token already exists, not starting OAuth.");
+        }
+    });    
+  }
 });
 
 // Unified function to perform the scan based on the selection

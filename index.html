@@ -15,12 +15,16 @@
     <link href="styles.css" rel="stylesheet" />
   </head>
   <body style="background-color: white; border: 3px solid #90d8b2">
+    <div id="profile-container" style="position: absolute; top: 15px; right: 15px; display: none;">
+      <img id="profile-picture" src="" alt="Profile Picture" style="width: 40px; height: 40px; border-radius: 50%; cursor: pointer;" />
+      <button id="logout-button" style="display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.6); color: white; border: none; cursor: pointer; border-radius: 50%;">Logout</button>
+    </div>
     <div style="position: absolute; top: 15px; right: 15px; padding: 10px">
       <img
         src="githubicon.jpg"  
         alt="GitHub Login"
         id="github-login-icon"
-        style="width: 40px; height: 40px; cursor: pointer;"
+        style="width: 40px; height: 40px; cursor: pointer; display: none;" 
       />
     </div>
     <main>

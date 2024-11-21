@@ -7,9 +7,9 @@
     "default_popup": "index.html",
     "default_icon": "icon.png"
   },
-  "permissions": ["activeTab", "scripting", "identity"],
+  "permissions": ["activeTab", "scripting", "identity", "storage"],
   "oauth2": {
-    "client_id": "Ov23li1gihMdqOFkMd5K",
+    "client_id": "Ov23licgT5DhZLZE1spq",
     "scopes": ["user"] 
   },
   "background": {
