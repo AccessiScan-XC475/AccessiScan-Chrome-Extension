@@ -27,9 +27,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 // Function to start the GitHub OAuth flow
 async function startGithubOAuthFlow() {
-    const clientId = "Ov23licgT5DhZLZE1spq"; // Replace with your GitHub client ID for the extension
+    const clientId = "Ov23licgT5DhZLZE1spq"; // Replace with your GitHub client ID
     const redirectUri = `https://${chrome.runtime.id}.chromiumapp.org/`;
-    const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=user`;
+    const state = Math.random().toString(36).substring(2, 15); // Generate a random state value
+    const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(
+        redirectUri
+    )}&scope=user&state=${state}`;
 
     console.log("Starting OAuth flow with URL:", authUrl);
 
@@ -40,7 +43,7 @@ async function startGithubOAuthFlow() {
         // Launch the OAuth flow using chrome.identity
         const redirectUrl = await chrome.identity.launchWebAuthFlow({
             url: authUrl,
-            interactive: true,
+            interactive: true, // Force the OAuth window to prompt the user
         });
 
         console.log("Redirect URL received:", redirectUrl);
@@ -60,7 +63,7 @@ async function startGithubOAuthFlow() {
 
         // Fetch the user's profile information
         const profileData = await fetchUserProfile(accessToken);
-        
+
         // Save profile data in local storage
         await chrome.storage.local.set({ accessToken, profileData });
 
@@ -71,6 +74,7 @@ async function startGithubOAuthFlow() {
         throw error;
     }
 }
+
 
 // Function to exchange the authorization code for an access token
 async function exchangeCodeForToken(code) {

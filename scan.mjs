@@ -122,36 +122,35 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       // Handle logout button click
       logoutButton.addEventListener("click", async () => {
-        console.log("Logout button clicked.");
-        const { accessToken } = await chrome.storage.local.get("accessToken");
-    
-        if (accessToken) {
-            try {
-                // Revoke token through the backend
-                const response = await fetch("http://localhost:4200/api/auth/github/revoke", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ token: accessToken }),
-                });
-                if (!response.ok) {
-                    throw new Error("Failed to revoke token");
-                }
-                console.log("Token revoked successfully.");
-            } catch (error) {
-                console.error("Failed to revoke token:", error);
+    console.log("Logout button clicked.");
+    const { accessToken } = await chrome.storage.local.get("accessToken");
+
+    if (accessToken) {
+        try {
+            // Revoke token through the backend
+            const response = await fetch("http://localhost:4200/api/auth/github/revoke", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ token: accessToken }),
+            });
+            if (!response.ok) {
+                throw new Error("Failed to revoke token");
             }
+            console.log("Token revoked successfully.");
+        } catch (error) {
+            console.error("Failed to revoke token:", error);
         }
-    
-        // Clear token and profile data
-        chrome.storage.local.remove(["accessToken", "profileData"], () => {
-            console.log("Access token and profile data cleared.");
-            resetToLoginState();
-            alert("You have been logged out.");
-        });
+    }
+
+    // Clear token and profile data
+    chrome.storage.local.remove(["accessToken", "profileData"], () => {
+        console.log("Access token and profile data cleared.");
+        alert("You have been logged out.");
+        // Redirect to GitHub logout to clear session cookies
+        window.location.href = "https://github.com/logout";
     });
-    
-    
-    
+});
+
     
   } else {
       // User is not logged in - Show login icon
