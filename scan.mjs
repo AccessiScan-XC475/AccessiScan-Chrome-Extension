@@ -115,8 +115,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   };
 
-
-
   if (accessToken) {
       console.log("User is logged in, fetching profile picture...");
 
@@ -182,12 +180,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     
         resetToLoginState();
-      });
-    
-    
-    
-
-    
+      });    
   } else {
       // User is not logged in - Show login icon
       profileContainer.style.display = "none"; // Hide the profile container

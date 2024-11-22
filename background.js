@@ -1,3 +1,8 @@
+require('dotenv').config();
+
+const clientId = process.env.GITHUB_CLIENT_ID;
+const clientSecret = process.env.GITHUB_CLIENT_SECRET;
+
 // Listen for messages from the popup or content scripts
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "startGithubOAuth") {
@@ -27,7 +32,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 // Function to start the GitHub OAuth flow
 async function startGithubOAuthFlow() {
-    const clientId = "Ov23licgT5DhZLZE1spq"; // Replace with your GitHub client ID
     const redirectUri = `https://${chrome.runtime.id}.chromiumapp.org/`;
     const state = Math.random().toString(36).substring(2, 15); // Generate a random state value
     const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(
@@ -104,9 +108,6 @@ async function exchangeCodeForToken(code) {
 }
 
 async function revokeToken(accessToken) {
-    const clientId = "Ov23licgT5DhZLZE1spq"; // Your GitHub client ID
-    const clientSecret = "your_client_secret"; // Your GitHub client secret
-
     const response = await fetch(`https://api.github.com/applications/${clientId}/token`, {
         method: "DELETE",
         headers: {
