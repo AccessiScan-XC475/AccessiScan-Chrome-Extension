@@ -49,6 +49,13 @@ export function displayScoreMessage(scanType, data) {
     }
   } else if (scanType == "Labeled Images") {
     message = data.details;
+  } else if (scanType == "Line Spacing") {
+    if (data.score < 100) {
+      message = "The space between lines in the highlighted elements must have a ratio of at least a 1.5 ratio of line height relative to font size. Increase the line spacing to improve your score.";
+    } else {
+      message = "Great job!";
+      playConfetti();
+    }
   }
 
   // Set the message in the DOM
