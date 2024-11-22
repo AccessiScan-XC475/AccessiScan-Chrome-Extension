@@ -86,16 +86,34 @@ document.addEventListener("DOMContentLoaded", async () => {
   const logoutButton = document.getElementById("logout-button");
 
   const resetToLoginState = () => {
-    profileContainer.style.display = "none"; // Hide profile container
-    githubLoginIcon.style.display = "block"; // Show GitHub login icon
-    logoutButton.style.display = "none"; // Hide logout button
+    // Check elements before modifying
+    if (profileContainer) {
+        profileContainer.style.display = "none";
+    } else {
+        console.error("profileContainer is undefined.");
+    }
 
-    // Add click event for login
-    githubLoginIcon.addEventListener("click", () => {
-        console.log("GitHub login button clicked.");
-        chrome.runtime.sendMessage({ action: "startGithubOAuth" });
-    });
-};
+    if (githubLoginIcon) {
+        githubLoginIcon.style.display = "block";
+    } else {
+        console.error("githubLoginIcon is undefined.");
+    }
+
+    if (logoutButton) {
+        logoutButton.style.display = "none";
+    } else {
+        console.error("logoutButton is undefined.");
+    }
+
+    // Add click event to login icon if it exists
+    if (githubLoginIcon) {
+        githubLoginIcon.addEventListener("click", () => {
+            console.log("GitHub login button clicked.");
+            chrome.runtime.sendMessage({ action: "startGithubOAuth" });
+        });
+    }
+  };
+
 
 
   if (accessToken) {
@@ -122,34 +140,51 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       // Handle logout button click
       logoutButton.addEventListener("click", async () => {
-    console.log("Logout button clicked.");
-    const { accessToken } = await chrome.storage.local.get("accessToken");
-
-    if (accessToken) {
-        try {
-            // Revoke token through the backend
-            const response = await fetch("http://localhost:4200/api/auth/github/revoke", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ token: accessToken }),
-            });
-            if (!response.ok) {
-                throw new Error("Failed to revoke token");
+        console.log("Logout button clicked.");
+        const { accessToken } = await chrome.storage.local.get("accessToken");
+    
+        if (accessToken) {
+            try {
+                const response = await fetch("http://localhost:4200/api/auth/github/revoke", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ token: accessToken }),
+                });
+                if (!response.ok) throw new Error("Failed to revoke token");
+                console.log("Token revoked successfully.");
+            } catch (error) {
+                console.error("Failed to revoke token:", error);
             }
-            console.log("Token revoked successfully.");
-        } catch (error) {
-            console.error("Failed to revoke token:", error);
         }
-    }
-
-    // Clear token and profile data
-    chrome.storage.local.remove(["accessToken", "profileData"], () => {
+    
+        await chrome.storage.local.remove(["accessToken", "profileData"]);
         console.log("Access token and profile data cleared.");
-        alert("You have been logged out.");
-        // Redirect to GitHub logout to clear session cookies
-        window.location.href = "https://github.com/logout";
-    });
-});
+    
+        // Check and remove GitHub session cookie
+        chrome.cookies.get({ url: "https://github.com", name: "user_session" }, (cookie) => {
+            if (chrome.runtime.lastError) {
+                console.error("Error accessing cookies API:", chrome.runtime.lastError);
+            } else if (cookie) {
+                chrome.cookies.remove(
+                    { url: "https://github.com", name: "user_session" },
+                    (details) => {
+                        if (details) {
+                            console.log("GitHub session cookie cleared:", details);
+                        } else {
+                            console.error("Failed to remove GitHub session cookie.");
+                        }
+                    }
+                );
+            } else {
+                console.warn("GitHub session cookie does not exist.");
+            }
+        });
+    
+        resetToLoginState();
+      });
+    
+    
+    
 
     
   } else {

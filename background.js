@@ -37,13 +37,13 @@ async function startGithubOAuthFlow() {
     console.log("Starting OAuth flow with URL:", authUrl);
 
     try {
-        // Clear any existing access token before starting OAuth
+        // Always clear any existing access token before starting OAuth
         await chrome.storage.local.remove(["accessToken", "profileData"]);
 
         // Launch the OAuth flow using chrome.identity
         const redirectUrl = await chrome.identity.launchWebAuthFlow({
             url: authUrl,
-            interactive: true, // Force the OAuth window to prompt the user
+            interactive: true, // Ensure the OAuth window prompts the user
         });
 
         console.log("Redirect URL received:", redirectUrl);
