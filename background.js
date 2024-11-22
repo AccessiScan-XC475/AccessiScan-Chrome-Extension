@@ -18,7 +18,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 });
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((request, sendResponse) => {
     if (request.action === "revokeToken") {
         revokeToken(request.accessToken)
             .then(() => sendResponse({ success: true }))

@@ -6,7 +6,6 @@ import {
 } from "./utils/highlight.js";
 import { createScoreGradient, displayScoreMessage } from "./utils/score.js";
 import { SCANNER, WEBSITE } from "./domain.js";
-import { getSecret } from "./secret.js";
 
 let selection = "";
 
@@ -180,7 +179,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     
         resetToLoginState();
-      });    
+      });
   } else {
       // User is not logged in - Show login icon
       profileContainer.style.display = "none"; // Hide the profile container
@@ -240,12 +239,19 @@ function performScan(scanType) {
               return;
           }
 
+          fetch(`${WEBSITE}/api/accessibility-selection?name=${selection}`, {
+            method: "POST",
+          }).catch((e) => {
+            console.error("Could not update statistics");
+            console.error(e);
+          });
+
           fetch(`${SCANNER}${apiEndpoint}`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ dom, css, secret: getSecret() }),
+            body: JSON.stringify({ dom, css }),
           })
             .then((res) => res.json())
             .then((data) => {
