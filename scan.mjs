@@ -89,6 +89,7 @@ function performScan(scanType) {
   msgs.hideOtherMessage();
 
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    const href = tabs[0].url;
     const activeTab = tabs[0];
 
     chrome.scripting.executeScript(
@@ -128,7 +129,12 @@ function performScan(scanType) {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ dom, css, secret: getSecret() }),
+            body: JSON.stringify({
+              dom,
+              css,
+              secret: getSecret(),
+              href,
+            }),
           })
             .then((res) => res.json())
             .then((data) => {
