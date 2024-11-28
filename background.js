@@ -1,29 +1,28 @@
 require("dotenv").config();
 
-const WEBSITE_BACKEND = "https://accessiscan.vercel.app/"; // Replace with your production backend URL
+const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
+const BACKEND_URL = "https://accessiscan.vercel.app/api/login/github"; // Adjust based on your backend URL
 
-// Listen for messages from the popup or content scripts
+// Listen for messages from scan.mjs
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "startGithubOAuth") {
     startGithubOAuthFlow()
-      .then((profileData) => {
-        sendResponse({ profileData }); // Send the profile data back to the sender
+      .then(() => {
+        sendResponse({ success: true });
       })
       .catch((error) => {
-        console.error("OAuth error:", error);
-        sendResponse({ error: "OAuth failed" });
+        console.error("OAuth flow failed:", error);
+        sendResponse({ success: false, error });
       });
     return true; // Keep the message channel open for async response
   }
-});
 
-chrome.runtime.onMessage.addListener((request, sendResponse) => {
-  if (request.action === "revokeToken") {
-    revokeToken(request.accessToken)
-      .then(() => sendResponse({ success: true }))
+  if (request.action === "checkAuth") {
+    checkAuthStatus()
+      .then((userData) => sendResponse({ success: true, userData }))
       .catch((error) => {
-        console.error("Error revoking token:", error);
-        sendResponse({ success: false, error });
+        console.error("Auth check failed:", error);
+        sendResponse({ success: false });
       });
     return true; // Keep the message channel open for async response
   }
@@ -31,52 +30,54 @@ chrome.runtime.onMessage.addListener((request, sendResponse) => {
 
 // Function to start the GitHub OAuth flow
 async function startGithubOAuthFlow() {
-  const state = Math.random().toString(36).substring(2, 15); // Generate a random state value
-  const authUrl = `${WEBSITE_BACKEND}/github/login?state=${state}`; // Redirect to website backend
+  const redirectUri = chrome.identity.getRedirectURL(); // Use Chrome extension redirect URL
+  const authUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${encodeURIComponent(
+    redirectUri
+  )}&scope=user`;
 
   console.log("Starting OAuth flow with URL:", authUrl);
 
-  try {
-    // Launch the OAuth flow using chrome.identity
-    const redirectUrl = await chrome.identity.launchWebAuthFlow({
-      url: authUrl,
-      interactive: true, // Ensure the OAuth window prompts the user
-    });
+  // Launch the OAuth flow
+  const redirectUrl = await chrome.identity.launchWebAuthFlow({
+    url: authUrl,
+    interactive: true,
+  });
 
-    console.log("Redirect URL received:", redirectUrl);
+  console.log("Redirect URL received:", redirectUrl);
 
-    // Fetch user info from the backend after successful OAuth
-    const response = await fetch(`${WEBSITE_BACKEND}/api/user-info`, {
-      credentials: "include", // Include cookies for session handling
-    });
+  // Extract the authorization code from the redirect URL
+  const urlParams = new URL(redirectUrl).searchParams;
+  const code = urlParams.get("code");
 
-    if (!response.ok) throw new Error("Failed to fetch user profile");
-
-    const profileData = await response.json();
-    console.log("OAuth flow complete. User data:", profileData);
-
-    return profileData;
-  } catch (error) {
-    console.error("Error in OAuth flow:", error);
-    throw error;
+  if (!code) {
+    throw new Error("Authorization code not found in redirect URL");
   }
+
+  console.log("Authorization code:", code);
+
+  // Exchange the authorization code for a token/secret via backend
+  const response = await fetch(`${BACKEND_URL}?code=${code}`, {
+    method: "GET",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to exchange authorization code");
+  }
+
+  console.log("OAuth flow complete.");
 }
 
-// Function to revoke the token
-async function revokeToken(accessToken) {
-  try {
-    const response = await fetch(`${WEBSITE_BACKEND}/api/logout`, {
-      method: "POST",
-      credentials: "include", // Include cookies for session handling
-    });
+// Function to check authentication status
+async function checkAuthStatus() {
+  const response = await fetch(`${BACKEND_URL}/status`, {
+    method: "GET",
+    credentials: "include", // Send cookies with the request
+  });
 
-    if (!response.ok) {
-      throw new Error("Failed to revoke token");
-    }
-
-    console.log("Token successfully revoked.");
-  } catch (error) {
-    console.error("Error revoking token:", error);
-    throw error;
+  if (!response.ok) {
+    throw new Error("Failed to check authentication status");
   }
+
+  const userData = await response.json();
+  return userData;
 }

@@ -80,49 +80,31 @@ document.addEventListener("DOMContentLoaded", async () => {
   const githubLoginIcon = document.getElementById("github-login-icon");
   const profileContainer = document.getElementById("profile-container");
   const profilePicture = document.getElementById("profile-picture");
-  const logoutButton = document.getElementById("logout-button");
 
   const resetToLoginState = () => {
     if (profileContainer) profileContainer.style.display = "none";
-    if (githubLoginIcon) githubLoginIcon.style.display = "block";
-    if (logoutButton) logoutButton.style.display = "none";
+    if (githubLoginIcon) {
+      githubLoginIcon.style.display = "block";
+      console.log("Reset to login state. Showing GitHub login icon.");
+    }
   };
 
   try {
-    // Check authentication status
-    const response = await fetch("https://accessiscan.vercel.app/api/auth/status", {
-      method: "GET",
-      credentials: "include", // Send cookies along with the request
-    });
-
-    if (response.ok) {
-      // User is authenticated, fetch and display user profile
-      const userData = await response.json();
-      const profilePictureUrl = userData.avatar_url; // Replace with the actual field name from your API response
-
-      if (profileContainer) profileContainer.style.display = "block";
-      if (profilePicture) profilePicture.src = profilePictureUrl;
-      if (githubLoginIcon) githubLoginIcon.style.display = "none";
-
-      profilePicture.addEventListener("click", () => {
-        logoutButton.style.display = logoutButton.style.display === "none" ? "block" : "none";
-      });
-
-      logoutButton.addEventListener("click", async () => {
-        console.log("Logout button clicked.");
-        await fetch("https://accessiscan.vercel.app/api/auth/logout", {
-          method: "POST",
-          credentials: "include", // Include cookies to invalidate the session
-        });
-
+    // Send a message to background.js to check if the user is authenticated
+    chrome.runtime.sendMessage({ action: "checkAuth" }, (response) => {
+      if (response && response.success) {
+        const { avatar_url } = response.userData;
+        if (profileContainer) profileContainer.style.display = "block";
+        if (profilePicture) profilePicture.src = avatar_url;
+        if (githubLoginIcon) githubLoginIcon.style.display = "none";
+        console.log("User is authenticated. Showing profile container.");
+      } else {
+        console.warn("User is not authenticated. Resetting to login state.");
         resetToLoginState();
-      });
-    } else {
-      console.warn("User is not authenticated. Resetting to login state.");
-      resetToLoginState();
-    }
+      }
+    });
   } catch (error) {
-    console.error("Failed to check login status:", error);
+    console.error("Failed to check authentication:", error);
     resetToLoginState();
   }
 
