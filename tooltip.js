@@ -33,3 +33,23 @@ document
   .getElementById("info-labeled-images")
   .addEventListener("mouseleave", hideTooltip);
 
+document
+  .getElementById("info-line-spacing")
+  .addEventListener("mouseenter", (event) => {
+    showTooltip(event, tooltips["info-labeled-images"]);
+  });
+
+document
+  .getElementById("info-line-spacing")
+  .addEventListener("mouseleave", hideTooltip);
+
+document
+  .getElementById("info-large-text")
+  .addEventListener("mouseenter", (event) => {
+    showTooltip(event, tooltips["info-labeled-images"]);
+  });
+
+document
+  .getElementById("info-large-text")
+  .addEventListener("mouseleave", hideTooltip);
+

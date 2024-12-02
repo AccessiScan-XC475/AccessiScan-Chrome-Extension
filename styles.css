@@ -68,7 +68,8 @@ button {
   word-wrap: break-word;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 10px;
   border-radius: 15px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 }
@@ -169,7 +170,7 @@ h3 {
 /* Info icon style */
 .info-icon {
   font-size: 14px;
-  margin-left: 8px;
+  margin: 0;
   font-weight: bold;
   color: #808080; /* Gray color for the 'i' */
   background-color: transparent; /* Transparent background */
