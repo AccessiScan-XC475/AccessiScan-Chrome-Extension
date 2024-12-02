@@ -76,36 +76,35 @@ button {
 
 /* Hover color for selection buttons */
 .selection-button:hover {
-  background-color: #8b95f6;
+  background-color: #9B8BF4;
   color: white;
-  border-color: #9b8bf4;
+  border-color: #9B8BF4;
 }
 
 /* Selected state for selection buttons */
 .selection-button.selected {
-  background-color: #8b95f6;
+  background-color: #9B8BF4;
   color: white;
-  border-color: #9b8bf4;
+  border-color: #9B8BF4;
 }
 
 /* Styling for scan button */
 #clear-button {
-  display: none;
-  position: relative;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-top: 40px;
+  position: absolute;
+  top: 10px;
+  right: 5px;
   z-index: 100;
-  background-color: white !important;
-  border-color: #9b8bf4;
-  color: black;
+  color: #1b6aaa;
+  border-color: transparent;
+  background: none;
+  font-size: 16px;
+  width: auto;
+  cursor: pointer;
 }
 /* Setting hover color for scan button */
 #clear-button:hover {
-  background-color: #8b95f6 !important;
-  color: white;
-  border-color: #9b8bf4;
+  color: #1B6AAA;
+  border-color: transparent;
 }
 
 #score-display {
@@ -207,7 +206,7 @@ h3 {
 
 /* Hover effect */
 .info-icon:hover {
-  background-color: #9b8bf4;
+  background-color: #9B8BF4;
   color: #ffffff; /* White 'i' on hover */
-  border-color: #9b8bf4; /* Blue border on hover */
+  border-color: #9B8BF4; /* Blue border on hover */
 }
