@@ -179,7 +179,7 @@ function performScan(scanType, overwrite = true) {
               const scoreDisplay = `<p class="score-display"><span class="score">${score}</span></p>`;
 
               const gradientElement = createScoreGradient(data.score);
-              const scoreMessageElement = displayScoreMessage(selection, data);
+              const scoreMessageElement = displayScoreMessage(scanType, data);
 
               const newScoreElement = `
                 <div>
@@ -194,7 +194,7 @@ function performScan(scanType, overwrite = true) {
                 document.getElementById("score-container").innerHTML =
                   newScoreElement;
               } else {
-                console.log("appending");
+                console.log("appending", scoreMessageElement);
                 document.getElementById("score-container").innerHTML +=
                   newScoreElement;
               }
