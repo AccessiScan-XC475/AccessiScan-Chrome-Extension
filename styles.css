@@ -49,7 +49,7 @@ button {
   width: 250px;
   padding: 10px;
   font-size: 16px;
-  border: 2px solid #9B8BF4;
+  border: 2px solid #9b8bf4;
   background-color: white;
   color: black;
   cursor: pointer;
@@ -63,7 +63,7 @@ button {
   font-size: 16px;
   height: 100%;
   white-space: normal;
-  border-color: #9B8BF4;
+  border-color: #9b8bf4;
   border-width: 2px;
   word-wrap: break-word;
   display: flex;
@@ -76,16 +76,16 @@ button {
 
 /* Hover color for selection buttons */
 .selection-button:hover {
-  background-color: #9B8BF4;
+  background-color: #9b8bf4;
   color: white;
-  border-color: #9B8BF4;
+  border-color: #9b8bf4;
 }
 
 /* Selected state for selection buttons */
 .selection-button.selected {
-  background-color: #9B8BF4;
+  background-color: #9b8bf4;
   color: white;
-  border-color: #9B8BF4;
+  border-color: #9b8bf4;
 }
 
 /* Styling for scan button */
@@ -103,33 +103,42 @@ button {
 }
 /* Setting hover color for scan button */
 #clear-button:hover {
-  color: #1B6AAA;
+  color: #1b6aaa;
   border-color: transparent;
 }
 
-#score-display {
-  visibility: hidden;
+.score-display {
   text-align: center;
   padding: 0.1rem;
   margin-top: 10px;
   margin-bottom: 10px;
   font-weight: 600;
-  font-size: 40px;
+  font-size: 30px;
   color: #55bb68;
 }
 
-#score-bar {
-  visibility: hidden;
+.score-bar {
   width: 100%;
   height: 20px;
-  background: linear-gradient(to right, #0E5090, #2A7DC0, #2FC3E6, #33C0CB, #34BFC7, #39BEBB, #41BDA9, #4BBC92, #56BA62) !important;
+  background: linear-gradient(
+    to right,
+    #0e5090,
+    #2a7dc0,
+    #2fc3e6,
+    #33c0cb,
+    #34bfc7,
+    #39bebb,
+    #41bda9,
+    #4bbc92,
+    #56ba62
+  ) !important;
   position: relative;
   border-radius: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-#score-arrow {
+.score-arrow {
   position: absolute;
   top: -10px;
   height: 0;
@@ -139,7 +148,7 @@ button {
   border-top: 10px solid black; /* Arrow color */
 }
 
-#score-message {
+.score-message {
   margin-top: 15px; /* Add space between the gradient and message */
   font-size: 16px;
   color: #333;
@@ -207,7 +216,7 @@ h3 {
 
 /* Hover effect */
 .info-icon:hover {
-  background-color: #9B8BF4;
+  background-color: #9b8bf4;
   color: #ffffff; /* White 'i' on hover */
   border-color: #ffffff; /* Blue border on hover */
 }
