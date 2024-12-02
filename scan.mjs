@@ -176,7 +176,7 @@ function performScan(scanType, overwrite = true) {
               } else {
                 score = `${data.score}%`;
               }
-              const scoreDisplay = `<p class="score-display"><span class="score">${score}</span></p>`;
+              const scoreDisplay = `<p class="score-display">${scanType}: <span class="score">${score}</span></p>`;
 
               const gradientElement = createScoreGradient(data.score);
               const scoreMessageElement = displayScoreMessage(scanType, data);
