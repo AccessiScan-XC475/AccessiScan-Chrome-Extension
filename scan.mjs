@@ -9,10 +9,19 @@ import { SCANNER, WEBSITE } from "./domain.js";
 
 let selection = "";
 
+function showLoading() {
+  document.getElementById("loading-text").style.display = "block";
+}
+
+function hideLoading() {
+  document.getElementById("loading-text").style.display = "none";
+}
+
 // Adding event listeners to the choices buttons
 document
   .getElementById("contrasting-colors-button")
   .addEventListener("click", () => {
+    clearScan();
     selection = "Contrasting Colors";
     updateButtonState("contrasting-colors-button");
     msgs.clearAll();
@@ -21,6 +30,7 @@ document
 
 document.getElementById("large-text-button").addEventListener("click", () => {
   selection = "Large Text";
+  clearScan();
   updateButtonState("large-text-button");
   msgs.clearAll();
   performScan(selection); //scan when user selects this button
@@ -29,6 +39,7 @@ document.getElementById("large-text-button").addEventListener("click", () => {
 document
   .getElementById("labeled-images-button")
   .addEventListener("click", () => {
+    clearScan();
     selection = "Labeled Images";
     updateButtonState("labeled-images-button");
     msgs.clearAll();
@@ -36,6 +47,7 @@ document
   });
 
 document.getElementById("line-spacing-button").addEventListener("click", () => {
+  clearScan();
   selection = "Line Spacing";
   updateButtonState("line-spacing-button");
   msgs.clearAll();
@@ -59,8 +71,7 @@ function updateButtonState(selectedButtonId) {
   document.getElementById(selectedButtonId).classList.add("selected");
 }
 
-//clear button
-document.getElementById("clear-button").addEventListener("click", function () {
+function clearScan(){
   // Hide the score display and accessiscan link
   document.getElementById("score-display").style.visibility = "hidden";
   document.getElementById("score").innerHTML = ""; // Clear the score
@@ -68,6 +79,11 @@ document.getElementById("clear-button").addEventListener("click", function () {
   document.getElementById("score-bar").style.visibility = "hidden";
   document.getElementById("score-message").style.visibility = "hidden";
   clearHighlights();
+}
+
+//clear button
+document.getElementById("clear-button").addEventListener("click", function () {
+  clearScan();
 
   // Deselect any selected button
   const selectedButton = document.querySelector(".selection-button.selected");
@@ -106,12 +122,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // Unified function to perform the scan based on the selection
-function performScan(scanType) {
+function performScan(scanType) { 
+  showLoading();
+  
   // Hide the "not implemented" and "other" messages by default
   msgs.hideNotImplementedMessage();
   msgs.hideOtherMessage();
 
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    const href = tabs[0].url;
     const activeTab = tabs[0];
 
     chrome.scripting.executeScript(
@@ -158,10 +177,16 @@ function performScan(scanType) {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ dom, css }),
+            body: JSON.stringify({
+              dom,
+              css,
+              secret: getSecret(),
+              href,
+            }),
           })
             .then((res) => res.json())
             .then((data) => {
+              hideLoading();
               document.getElementById("score-display").style.visibility =
                 "visible";
               document.getElementById("score-message").style.visibility =

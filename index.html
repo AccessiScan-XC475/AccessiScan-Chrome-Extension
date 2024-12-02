@@ -19,7 +19,7 @@
       <img id="profile-picture" src="" alt="Profile Picture" style="width: 40px; height: 40px; border-radius: 50%; cursor: pointer;" />
       <button id="logout-button" style="display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.6); color: white; border: none; cursor: pointer; border-radius: 50%;">Logout</button>
     </div>
-    <div style="position: absolute; top: 15px; right: 15px; padding: 10px">
+    <div style="position: absolute; top: 15px; left: 15px; padding: 10px">
       <img
         src="githubicon.jpg"  
         alt="GitHub Login"
@@ -28,52 +28,54 @@
       />
     </div>
     <main>
+      <div style="text-align: center; margin-top: 10px">
+        <button id="clear-button">reset highlights</button>
+      </div>
       <img
-        src="logo.png"
+        src="accessiscan_logo.png"
         alt="AccessiScan Logo"
-        style="width: 80px; display: block; margin: 0 auto"
+        style="width: 150px; display: block; margin: 0 auto"
       />
-      <h2><b>What are the goals for your project?</b></h2>
+      <h2><b>Scan my project for...</b></h2>
       <!-- Selection Buttons -->
       <div id="selection-buttons">
         <div class="button-item">
-          <span class="info-icon" id="info-contrasting-colors">i</span>
           <button
             class="ant-btn selection-button"
             id="contrasting-colors-button"
           >
+          <span class="info-icon" id="info-contrasting-colors">i</span>
             Contrasting Colors
           </button>
         </div>
 
         <div class="button-item">
           <button class="ant-btn selection-button" id="large-text-button">
-            Large Text
+            <span class="info-icon tooltip-left" id="info-large-text">i</span>
+              Text Size
           </button>
-          <span class="info-icon tooltip-left" id="info-large-text">i</span>
-          <div class="tooltip tooltip-left">Tooltip for Large Text</div>
         </div>
 
         <div class="button-item">
           <button class="ant-btn selection-button" id="labeled-images-button">
+            <span class="info-icon" id="info-labeled-images">i</span>
             Labeled Images
           </button>
-          <span class="info-icon" id="info-labeled-images">i</span>
-          <div class="tooltip tooltip-left">Tooltip for Labeled Images</div>
         </div>
 
         <div class="button-item">
           <button class="ant-btn selection-button" id="line-spacing-button">
+            <span class="info-icon" id="info-line-spacing">i</span>
             Line Spacing
           </button>
-          <span class="info-icon" id="info-line-spacing">i</span>
-          <div class="tooltip tooltip-left">Tooltip for Line Spacing</div>
         </div>
 
         <div>
           <input id="secret-input" name="secret" placeholder="secret" />
         </div>
-
+        <div id="loading-text" style="display: none; text-align: center; margin-top: 10px; font-weight: bold; color: #90d8b2;">
+          Loading...
+        </div>
         <div id="tooltip" class="tooltip"></div>
         <p id="error-message" style="display: none; text-align: center">
           Please select an accessiblity category :)
@@ -100,15 +102,12 @@
         style="text-align: center; margin-top: 10px; visibility: hidden"
       >
         <a
-          href="https://accessiscan.vercel.app/"
+          href="https://accessiscan.vercel.app/resources"
           target="_blank"
           style="color: #196cad; font-weight: bold; text-decoration: underline"
         >
           Click here to learn more about improving accessibility
         </a>
-      </div>
-      <div style="text-align: center; margin-top: 10px">
-        <button id="clear-button">Clear</button>
       </div>
     </main>
     <script src="utils/confetti.js"></script>

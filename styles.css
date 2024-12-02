@@ -2,7 +2,7 @@
 html,
 body {
   width: 500px;
-  height: 750px;
+  height: 700px;
   margin: 0;
   padding: 0;
   overflow: hidden; /* Prevents scrollbars */
@@ -30,8 +30,6 @@ h2 {
 .button-item {
   display: flex;
   align-items: center;
-  /* justify-content: space-between;
-        height: 100%; */
 }
 
 .button-item .info-icon {
@@ -48,64 +46,65 @@ h2 {
 }
 
 button {
-  width: 200px;
+  width: 250px;
   padding: 10px;
   font-size: 16px;
-  border: 2px solid #6a5acd;
+  border: 2px solid #9B8BF4;
   background-color: white;
   color: black;
   cursor: pointer;
 }
 /* Selection button styling */
 .selection-button {
-  max-width: 150px;
+  position: relative;
+  max-width: 250px;
   width: 100%;
-  padding: 10px;
+  padding: 10px 10px;
   font-size: 16px;
   height: 100%;
   white-space: normal;
-  border-color: #9b8bf4;
+  border-color: #9B8BF4;
   border-width: 2px;
   word-wrap: break-word;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  gap: 10px;
   border-radius: 15px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 /* Hover color for selection buttons */
 .selection-button:hover {
-  background-color: #8b95f6;
+  background-color: #9B8BF4;
   color: white;
-  border-color: #9b8bf4;
+  border-color: #9B8BF4;
 }
 
 /* Selected state for selection buttons */
 .selection-button.selected {
-  background-color: #8b95f6;
+  background-color: #9B8BF4;
   color: white;
-  border-color: #9b8bf4;
+  border-color: #9B8BF4;
 }
 
 /* Styling for scan button */
 #clear-button {
-  display: none;
-  position: relative;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-top: 40px;
+  position: absolute;
+  top: 10px;
+  right: 5px;
   z-index: 100;
-  background-color: white !important;
-  border-color: #9b8bf4;
-  color: black;
+  color: #1b6aaa;
+  border-color: transparent;
+  background: none;
+  font-size: 16px;
+  width: auto;
+  cursor: pointer;
 }
 /* Setting hover color for scan button */
 #clear-button:hover {
-  background-color: #8b95f6 !important;
-  color: white;
-  border-color: #9b8bf4;
+  color: #1B6AAA;
+  border-color: transparent;
 }
 
 #score-display {
@@ -123,7 +122,7 @@ button {
   visibility: hidden;
   width: 100%;
   height: 20px;
-  background: linear-gradient(to right, red, yellow, green);
+  background: linear-gradient(to right, #0E5090, #2A7DC0, #2FC3E6, #33C0CB, #34BFC7, #39BEBB, #41BDA9, #4BBC92, #56BA62) !important;
   position: relative;
   border-radius: 10px;
   margin-top: 10px;
@@ -166,10 +165,12 @@ h3 {
   border-radius: 5px;
   font-size: 16px; /* Set font size to 16px */
   z-index: 1000;
+  width: 220px;
 }
 /* Info icon style */
 .info-icon {
   font-size: 14px;
+  margin: 0;
   font-weight: bold;
   color: #808080; /* Gray color for the 'i' */
   background-color: transparent; /* Transparent background */
@@ -195,20 +196,26 @@ h3 {
   transform: translateY(-50%);
 }
 
-/* Tooltip positioned to the left */
+/* Tooltip positioned to the left for labeled images*/
 .info-icon.tooltip-left:hover + .tooltip {
   display: block;
   right: 110%; /* Position tooltip to the left */
-  left: auto;
-  top: 50%;
+  left: 50%;
+  top: auto;
   transform: translateY(-50%);
 }
 
 /* Hover effect */
 .info-icon:hover {
-  background-color: #9b8bf4;
+  background-color: #9B8BF4;
   color: #ffffff; /* White 'i' on hover */
-  border-color: #9b8bf4; /* Blue border on hover */
+  border-color: #ffffff; /* Blue border on hover */
+}
+
+#loading-text {
+  font-size: 18px;
+  font-weight: bold;
+  color: #90d8b2;
 }
 
 #profile-container {
