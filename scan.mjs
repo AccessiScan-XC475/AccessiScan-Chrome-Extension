@@ -55,6 +55,17 @@ document.getElementById("line-spacing-button").addEventListener("click", () => {
   performScan(selection); //scan when user selects this button
 });
 
+document
+  .getElementById("overall-accessibility-button")
+  .addEventListener("click", () => {
+    clearScan();
+    msgs.clearAll();
+    updateButtonState("overall-accessibility-button");
+    performScan("Contrasting Colors");
+    performScan("Large Text");
+    performScan("Labeled Images");
+    performScan("Line Spacing");
+  });
 // Function to update button state
 function updateButtonState(selectedButtonId) {
   // Remove highlights when different button is pressed
@@ -72,7 +83,7 @@ function updateButtonState(selectedButtonId) {
   document.getElementById(selectedButtonId).classList.add("selected");
 }
 
-function clearScan(){
+function clearScan() {
   // Hide the score display and accessiscan link
   document.getElementById("score-display").style.visibility = "hidden";
   document.getElementById("score").innerHTML = ""; // Clear the score
@@ -99,9 +110,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Unified function to perform the scan based on the selection
-function performScan(scanType) { 
+function performScan(scanType) {
   showLoading();
-  
+
   // Hide the "not implemented" and "other" messages by default
   msgs.hideNotImplementedMessage();
   msgs.hideOtherMessage();
