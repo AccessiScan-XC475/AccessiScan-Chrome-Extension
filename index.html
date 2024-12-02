@@ -16,50 +16,46 @@
   </head>
   <body style="background-color: white; border: 3px solid #90d8b2">
     <main>
+      <div style="text-align: center; margin-top: 10px">
+        <button id="clear-button">reset highlights</button>
+      </div>
       <img
-        src="logo.png"
+        src="accessiscan_logo.png"
         alt="AccessiScan Logo"
-        style="width: 80px; display: block; margin: 0 auto"
+        style="width: 150px; display: block; margin: 0 auto"
       />
-      <h2><b>What are the goals for your project?</b></h2>
+      <h2><b>Scan my project for...</b></h2>
       <!-- Selection Buttons -->
       <div id="selection-buttons">
         <div class="button-item">
-          <span class="info-icon" id="info-contrasting-colors">i</span>
           <button
             class="ant-btn selection-button"
             id="contrasting-colors-button"
           >
+          <span class="info-icon" id="info-contrasting-colors">i</span>
             Contrasting Colors
           </button>
         </div>
 
         <div class="button-item">
           <button class="ant-btn selection-button" id="large-text-button">
-            Large Text
+            <span class="info-icon tooltip-left" id="info-large-text">i</span>
+              Text Size
           </button>
-          <span class="info-icon tooltip-left" id="info-large-text">i</span>
-          <div class="tooltip">
-            This button checks if the text size is large enough (at least size 16) for visually impaired users.
-          </div>
         </div>
 
         <div class="button-item">
           <button class="ant-btn selection-button" id="labeled-images-button">
+            <span class="info-icon" id="info-labeled-images">i</span>
             Labeled Images
           </button>
-          <span class="info-icon" id="info-labeled-images">i</span>
-          <div class="tooltip tooltip-left">Tooltip for Labeled Images</div>
         </div>
 
         <div class="button-item">
           <button class="ant-btn selection-button" id="line-spacing-button">
+            <span class="info-icon" id="info-line-spacing">i</span>
             Line Spacing
           </button>
-          <span class="info-icon tooltip-left" id="info-line-spacing">i</span>
-          <div class="tooltip">
-            This button checks if the space between lines has at least a 1.5 ratio of line height relative to font size.
-          </div>
         </div>
 
         <div>
@@ -98,9 +94,6 @@
         >
           Click here to learn more about improving accessibility
         </a>
-      </div>
-      <div style="text-align: center; margin-top: 10px">
-        <button id="clear-button">Clear</button>
       </div>
     </main>
     <script src="utils/confetti.js"></script>
