@@ -27,6 +27,13 @@ h2 {
   gap: 10px;
 }
 
+#overall-button-container {
+  display: flex;
+  justify-content: center;
+  padding: 4px;
+  margin: 10px;
+}
+
 .button-item {
   display: flex;
   align-items: center;
