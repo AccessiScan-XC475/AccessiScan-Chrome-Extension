@@ -10,6 +10,14 @@ import { getSecret } from "./secret.js";
 
 let selection = "";
 
+function showLoading() {
+  document.getElementById("loading-text").style.display = "block";
+}
+
+function hideLoading() {
+  document.getElementById("loading-text").style.display = "none";
+}
+
 // Adding event listeners to the choices buttons
 document
   .getElementById("contrasting-colors-button")
@@ -91,7 +99,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Unified function to perform the scan based on the selection
-function performScan(scanType) {
+function performScan(scanType) { 
+  showLoading();
+  
   // Hide the "not implemented" and "other" messages by default
   msgs.hideNotImplementedMessage();
   msgs.hideOtherMessage();
@@ -146,6 +156,7 @@ function performScan(scanType) {
           })
             .then((res) => res.json())
             .then((data) => {
+              hideLoading();
               document.getElementById("score-display").style.visibility =
                 "visible";
               document.getElementById("score-message").style.visibility =
