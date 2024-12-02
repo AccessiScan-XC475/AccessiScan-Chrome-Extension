@@ -46,7 +46,7 @@ h2 {
 }
 
 button {
-  width: 200px;
+  width: 250px;
   padding: 10px;
   font-size: 16px;
   border: 2px solid #9B8BF4;
@@ -57,9 +57,9 @@ button {
 /* Selection button styling */
 .selection-button {
   position: relative;
-  max-width: 200px;
+  max-width: 250px;
   width: 100%;
-  padding: 10px 15px;
+  padding: 10px 10px;
   font-size: 16px;
   height: 100%;
   white-space: normal;
