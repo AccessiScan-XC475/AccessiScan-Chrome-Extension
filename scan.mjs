@@ -14,6 +14,7 @@ let selection = "";
 document
   .getElementById("contrasting-colors-button")
   .addEventListener("click", () => {
+    clearScan();
     selection = "Contrasting Colors";
     updateButtonState("contrasting-colors-button");
     msgs.clearAll();
@@ -22,6 +23,7 @@ document
 
 document.getElementById("large-text-button").addEventListener("click", () => {
   selection = "Large Text";
+  clearScan();
   updateButtonState("large-text-button");
   msgs.clearAll();
   performScan(selection); //scan when user selects this button
@@ -30,6 +32,7 @@ document.getElementById("large-text-button").addEventListener("click", () => {
 document
   .getElementById("labeled-images-button")
   .addEventListener("click", () => {
+    clearScan();
     selection = "Labeled Images";
     updateButtonState("labeled-images-button");
     msgs.clearAll();
@@ -37,6 +40,7 @@ document
   });
 
 document.getElementById("line-spacing-button").addEventListener("click", () => {
+  clearScan();
   selection = "Line Spacing";
   updateButtonState("line-spacing-button");
   msgs.clearAll();
@@ -60,8 +64,7 @@ function updateButtonState(selectedButtonId) {
   document.getElementById(selectedButtonId).classList.add("selected");
 }
 
-//clear button
-document.getElementById("clear-button").addEventListener("click", function () {
+function clearScan(){
   // Hide the score display and accessiscan link
   document.getElementById("score-display").style.visibility = "hidden";
   document.getElementById("score").innerHTML = ""; // Clear the score
@@ -69,6 +72,11 @@ document.getElementById("clear-button").addEventListener("click", function () {
   document.getElementById("score-bar").style.visibility = "hidden";
   document.getElementById("score-message").style.visibility = "hidden";
   clearHighlights();
+}
+
+//clear button
+document.getElementById("clear-button").addEventListener("click", function () {
+  clearScan();
 
   // Deselect any selected button
   const selectedButton = document.querySelector(".selection-button.selected");
