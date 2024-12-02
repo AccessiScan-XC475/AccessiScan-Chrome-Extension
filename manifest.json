@@ -8,7 +8,7 @@
     "default_icon": "icon.png"
   },
   "permissions": ["activeTab", "scripting", "identity", "storage", "cookies"],
-  "host_permissions": ["https://github.com/*"],
+  "host_permissions": ["https://github.com/*", "https://accessiscan.vercel.app/*"],
   "oauth2": {
     "client_id": "Ov23licgT5DhZLZE1spq",
     "scopes": ["user"] 
