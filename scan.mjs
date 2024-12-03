@@ -6,6 +6,7 @@ import {
 } from "./utils/highlight.js";
 import { createScoreGradient, displayScoreMessage } from "./utils/score.js";
 import { SCANNER, WEBSITE } from "./domain.js";
+import { setSecret, getSecret } from "./secret.js";
 
 let selection = "";
 
@@ -109,15 +110,19 @@ document.addEventListener("DOMContentLoaded", () => {
   // Add click event listener
   githubLoginIcon.addEventListener("click", () => {
     console.log("GitHub login button clicked.");
-    chrome.runtime.sendMessage({ action: "startGithubOAuth" }, (response) => {
-      console.log("GOT RES");
-      if (response && response.success) {
-        console.log("GitHub OAuth flow started successfully.");
-        // Optionally refresh UI or take action
-      } else {
-        console.error("GitHub OAuth flow failed:", response?.error);
-      }
-    });
+    chrome.runtime.sendMessage(
+      { action: "startGithubOAuth", domain: WEBSITE },
+      (response) => {
+        console.log("response", response);
+        if (response && response.success) {
+          console.log("GitHub OAuth flow finished successfully.");
+          setSecret(response.secret);
+          // Optionally refresh UI or take action
+        } else {
+          console.error("GitHub OAuth flow failed:", response?.error);
+        }
+      },
+    );
   });
 });
 
@@ -234,4 +239,3 @@ function performScan(scanType) {
     );
   });
 }
-
