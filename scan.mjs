@@ -71,7 +71,7 @@ function updateButtonState(selectedButtonId) {
   document.getElementById(selectedButtonId).classList.add("selected");
 }
 
-function clearScan(){
+function clearScan() {
   // Hide the score display and accessiscan link
   document.getElementById("score-display").style.visibility = "hidden";
   document.getElementById("score").innerHTML = ""; // Clear the score
@@ -110,6 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
   githubLoginIcon.addEventListener("click", () => {
     console.log("GitHub login button clicked.");
     chrome.runtime.sendMessage({ action: "startGithubOAuth" }, (response) => {
+      console.log("GOT RES");
       if (response && response.success) {
         console.log("GitHub OAuth flow started successfully.");
         // Optionally refresh UI or take action
@@ -120,11 +121,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-
 // Unified function to perform the scan based on the selection
-function performScan(scanType) { 
+function performScan(scanType) {
   showLoading();
-  
+
   // Hide the "not implemented" and "other" messages by default
   msgs.hideNotImplementedMessage();
   msgs.hideOtherMessage();
@@ -234,3 +234,4 @@ function performScan(scanType) {
     );
   });
 }
+
