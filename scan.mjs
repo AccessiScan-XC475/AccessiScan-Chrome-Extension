@@ -6,7 +6,7 @@ import {
 } from "./utils/highlight.js";
 import { createScoreGradient, displayScoreMessage } from "./utils/score.js";
 import { SCANNER, WEBSITE } from "./domain.js";
-import { getSecret } from "./secret.js";
+import { setSecret, getSecret } from "./secret.js";
 
 let selection = "";
 
@@ -106,8 +106,36 @@ document.getElementById("clear-button").addEventListener("click", function () {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  const score = 5; // will fetch later
-  createScoreGradient(score);
+  const githubLoginIcon = document.getElementById("github-login-icon");
+  const profileContainer = document.getElementById("profile-container");
+  const profilePicture = document.getElementById("profile-picture");
+  const logoutButton = document.getElementById("logout-button");
+
+  if (!githubLoginIcon) {
+    console.error("GitHub login icon not found!");
+    return;
+  }
+
+  // Show GitHub login button
+  githubLoginIcon.style.display = "block";
+
+  // Add click event listener
+  githubLoginIcon.addEventListener("click", () => {
+    console.log("GitHub login button clicked.");
+    chrome.runtime.sendMessage(
+      { action: "startGithubOAuth", domain: WEBSITE },
+      (response) => {
+        console.log("response", response);
+        if (response && response.success) {
+          console.log("GitHub OAuth flow finished successfully.");
+          setSecret(response.secret);
+          // Optionally refresh UI or take action
+        } else {
+          console.error("GitHub OAuth flow failed:", response?.error);
+        }
+      },
+    );
+  });
 });
 
 // Unified function to perform the scan based on the selection
@@ -153,6 +181,13 @@ function performScan(scanType, overwrite = true) {
               msgs.showNotImplementedMessage();
               return;
           }
+
+          fetch(`${WEBSITE}/api/accessibility-selection?name=${selection}`, {
+            method: "POST",
+          }).catch((e) => {
+            console.error("Could not update statistics");
+            console.error(e);
+          });
 
           fetch(`${SCANNER}${apiEndpoint}`, {
             method: "POST",

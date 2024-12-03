@@ -15,6 +15,14 @@
     <link href="styles.css" rel="stylesheet" />
   </head>
   <body style="background-color: white; border: 3px solid #90d8b2">
+    <div style="position: absolute; top: 15px; left: 15px; padding: 10px">
+      <img
+        src="github-mark.png"
+        alt="GitHub Login"
+        id="github-login-icon"
+        style="width: 40px; height: 40px; cursor: pointer; display: none"
+      />
+    </div>
     <main>
       <div style="text-align: center; margin-top: 10px">
         <button id="clear-button">reset highlights</button>
@@ -71,6 +79,9 @@
           </div>
         </div>
 
+        <div>
+          <p id="signed-in"></p>
+        </div>
         <div
           id="loading-text"
           style="
@@ -97,16 +108,7 @@
           This scan type is not implemented yet
         </p>
       </div>
-      <div style="margin: 3px; padding: 10px">
-        <input id="secret-input" name="secret" placeholder="secret" />
-      </div>
-      <div id="score-container">
-        <!-- <p id="score-display"><span id="score"></span></p> -->
-        <!-- <div id="score-bar"> -->
-        <!--   <div id="score-arrow"></div> -->
-        <!-- </div> -->
-        <!-- <div class="score-message"></div> -->
-      </div>
+      <div id="score-container"></div>
       <div
         id="accessiscan-link"
         style="text-align: center; margin-top: 10px; visibility: hidden"
@@ -119,6 +121,7 @@
           Click here to learn more about improving accessibility
         </a>
       </div>
+      <button id="sign-out-button" style="visibility: hidden">Sign Out</button>
     </main>
     <script src="utils/confetti.js"></script>
     <script type="module" src="scan.mjs"></script>

@@ -1,22 +1,35 @@
-const SECRET = "secret";
-const input = document.getElementById("secret-input");
+const SECRET_KEY = "SECRET";
 
-// save input to localstorage
-input.addEventListener("input", () => {
-  const value = input.value;
-  localStorage.setItem(SECRET, value);
-  console.log(`Saved to localStorage: ${value}`);
-});
+const signedInElement = document.getElementById("signed-in");
+const signOutButton = document.getElementById("sign-out-button");
+
+export function getSecret() {
+  return localStorage.getItem(SECRET_KEY);
+}
+
+export function setSecret(secret) {
+  localStorage.setItem(SECRET_KEY, secret);
+  if (secret) {
+    signedInElement.innerText = "Signed In";
+    signOutButton.style.visibility = "visible";
+  } else {
+    signedInElement.innerText = "Not Signed In";
+    signOutButton.style.visibility = "hidden";
+  }
+}
 
 // load previously saved value on page load
 document.addEventListener("DOMContentLoaded", () => {
   const savedValue = getSecret();
   if (savedValue) {
-    input.value = savedValue;
-    console.log(`Loaded from localStorage: ${savedValue}`);
+    signedInElement.innerText = "Signed In";
+    signOutButton.style.visibility = "visible";
+  } else {
+    signedInElement.innerText = "Not Signed In";
+    signOutButton.style.visibility = "hidden";
   }
 });
 
-export function getSecret() {
-  return localStorage.getItem(SECRET);
-}
+signOutButton.addEventListener("click", () => {
+  setSecret("");
+});
