@@ -55,6 +55,17 @@ document.getElementById("line-spacing-button").addEventListener("click", () => {
   performScan(selection); //scan when user selects this button
 });
 
+document
+  .getElementById("overall-accessibility-button")
+  .addEventListener("click", () => {
+    clearScan();
+    msgs.clearAll();
+    updateButtonState("overall-accessibility-button");
+    performScan("Contrasting Colors", false);
+    performScan("Large Text", false);
+    performScan("Labeled Images", false);
+    performScan("Line Spacing", false);
+  });
 // Function to update button state
 function updateButtonState(selectedButtonId) {
   // Remove highlights when different button is pressed
@@ -72,13 +83,14 @@ function updateButtonState(selectedButtonId) {
   document.getElementById(selectedButtonId).classList.add("selected");
 }
 
-function clearScan(){
+function clearScan() {
   // Hide the score display and accessiscan link
-  document.getElementById("score-display").style.visibility = "hidden";
-  document.getElementById("score").innerHTML = ""; // Clear the score
-  document.getElementById("accessiscan-link").style.visibility = "hidden";
-  document.getElementById("score-bar").style.visibility = "hidden";
-  document.getElementById("score-message").style.visibility = "hidden";
+  // document.getElementById("score-display").style.visibility = "hidden";
+  // document.getElementById("score").innerHTML = ""; // Clear the score
+  // document.getElementById("accessiscan-link").style.visibility = "hidden";
+  // document.getElementById("score-bar").style.visibility = "hidden";
+  // document.getElementById("score-message").style.visibility = "hidden";
+  // document.getElementById("score-container").style.visibility = "hidden";
   clearHighlights();
 }
 
@@ -99,9 +111,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Unified function to perform the scan based on the selection
-function performScan(scanType) { 
+function performScan(scanType, overwrite = true) {
   showLoading();
-  
+
   // Hide the "not implemented" and "other" messages by default
   msgs.hideNotImplementedMessage();
   msgs.hideOtherMessage();
@@ -157,21 +169,36 @@ function performScan(scanType) {
             .then((res) => res.json())
             .then((data) => {
               hideLoading();
-              document.getElementById("score-display").style.visibility =
-                "visible";
-              document.getElementById("score-message").style.visibility =
-                "visible";
-              if (scanType === "Labeled Images") {
-                document.getElementById("score").innerHTML =
-                  `${data.images_with_alt}/${data.total_images}`;
-              } else {
-                document.getElementById("score").innerHTML = `${data.score}%`;
-              }
-              createScoreGradient(data.score);
-              displayScoreMessage(selection, data);
 
-              // Show score bar
-              document.getElementById("score-bar").style.visibility = "visible";
+              let score = "N/A";
+              if (scanType === "Labeled Images") {
+                score = `${data.images_with_alt}/${data.total_images}`;
+              } else {
+                score = `${data.score}%`;
+              }
+              const scoreDisplay = `<p class="score-display">${scanType}: <span class="score">${score}</span></p>`;
+
+              const gradientElement = createScoreGradient(data.score);
+              const scoreMessageElement = displayScoreMessage(scanType, data);
+
+              const newScoreElement = `
+                <div>
+                  ${scoreDisplay}
+                  ${gradientElement}
+                  ${scoreMessageElement}
+                </div>
+              `;
+
+              if (overwrite) {
+                console.log("overwriting");
+                document.getElementById("score-container").innerHTML =
+                  newScoreElement;
+              } else {
+                console.log("appending", scoreMessageElement);
+                document.getElementById("score-container").innerHTML +=
+                  newScoreElement;
+              }
+
               // Show the clear button
               document.getElementById("clear-button").style.display = "block";
 
