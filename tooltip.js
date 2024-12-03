@@ -36,7 +36,7 @@ document
 document
   .getElementById("info-line-spacing")
   .addEventListener("mouseenter", (event) => {
-    showTooltip(event, tooltips["info-labeled-images"]);
+    showTooltip(event, tooltips["info-line-spacing"]);
   });
 
 document
@@ -46,7 +46,7 @@ document
 document
   .getElementById("info-large-text")
   .addEventListener("mouseenter", (event) => {
-    showTooltip(event, tooltips["info-labeled-images"]);
+    showTooltip(event, tooltips["info-large-text"]);
   });
 
 document
