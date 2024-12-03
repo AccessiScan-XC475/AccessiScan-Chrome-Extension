@@ -2,24 +2,22 @@ import { playConfetti } from "./play-confetti.js";
 
 //score range
 export function createScoreGradient(score) {
-  const gradientContainer = document.getElementById("score-bar");
-  const arrow = document.getElementById("score-arrow");
-
   // Calculates arrow position based on score (0-100)
   const arrowPosition = (score / 100) * 100;
 
-  // Applies arrow position as a percentage
-  arrow.style.left = `${arrowPosition}%`;
-
   // Applies gradient colors
-  gradientContainer.style.background =
-    "linear-gradient(to right, red, yellow, green)";
+  const gradientElement = `
+    <div class="score-bar" style="background:linear-gradient(to right, red, yellow, green);">
+      <div class="score-arrow" style="left:${arrowPosition}%;">
+      </div>
+    </div>
+  `;
+
+  return gradientElement;
 }
 
 // Score feedback message
 export function displayScoreMessage(scanType, data) {
-  const scoreMessageElement = document.getElementById("score-message");
-
   // Determine the message based on scan type and score
   let message = "";
 
@@ -51,7 +49,8 @@ export function displayScoreMessage(scanType, data) {
     message = data.details;
   } else if (scanType == "Line Spacing") {
     if (data.score < 100) {
-      message = "The space between lines in the highlighted elements must have a ratio of at least a 1.5 ratio of line height relative to font size. Increase the line spacing to improve your score.";
+      message =
+        "The space between lines in the highlighted elements must have a ratio of at least a 1.5 ratio of line height relative to font size. Increase the line spacing to improve your score.";
     } else {
       message = "Great job!";
       playConfetti();
@@ -59,5 +58,5 @@ export function displayScoreMessage(scanType, data) {
   }
 
   // Set the message in the DOM
-  scoreMessageElement.textContent = message;
+  return `<div class="score-message">${message}</div>`;
 }
