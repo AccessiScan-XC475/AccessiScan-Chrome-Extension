@@ -1,12 +1,3 @@
-// import { WEBSITE } from "./domain";
-// import { setSecret } from "./secret";
-
-const GITHUB_CLIENT_ID = "Ov23licgT5DhZLZE1spq"; // Your GitHub Client ID
-
-if (!GITHUB_CLIENT_ID) {
-  console.error("GitHub Client ID is missing. Ensure it's set correctly.");
-}
-
 // Listen for messages from `scan.mjs`
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "startGithubOAuth") {
@@ -23,8 +14,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 // Start the GitHub OAuth flow
 async function startGithubOAuthFlow(domain) {
+  const client_id_res = await fetch(`${domain}/api/extension-client-id/github`);
+  const github_client_id = await client_id_res.text();
   const redirectUri = `${domain}/api/extension-exchange/github`;
-  const authUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${encodeURIComponent(
+  const authUrl = `https://github.com/login/oauth/authorize?client_id=${github_client_id}&redirect_uri=${encodeURIComponent(
     redirectUri,
   )}&scope=user&state=${chrome.runtime.id}`;
 
