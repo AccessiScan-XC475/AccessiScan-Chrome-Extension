@@ -118,9 +118,9 @@ button {
 }
 
 #sign-out-button {
-  position: absolute;
-  bottom: 14px;
-  left: 14px;
+  margin-top: auto;
+  margin-bottom: -10px;
+  margin-left: -10px;
   z-index: 100;
   color: black;
   border-color: #9b8bf4;
@@ -138,6 +138,26 @@ button {
   color: white;
   border-color: #9b8bf4;
   background-color: #9b8bf4;
+}
+
+#signed-in {
+  position: relative; /* Keep the element relative for pseudo-element positioning */
+  margin-top: auto; /* Preserve the top margin */
+  margin-bottom: -45px; /* Preserve the bottom margin */
+}
+
+#signed-in:hover::after {
+  content: "(Click the GitHub Icon To Sign In)"; /* Text to display on hover */
+  position: absolute; /* Position relative to the <p> */
+  left: 22%; /* Adjust as needed */
+  top: -4px; /* Adjust to appear above or near the <p> element */
+  color: black; /* Text color */
+  background-color: transparent; /* Optional: Background color */
+  padding: 5px; /* Optional: Add padding for better appearance */
+  border-radius: 5px; /* Optional: Rounded corners */
+  font-size: 13px; /* Optional: Adjust font size */
+  white-space: nowrap; /* Prevent wrapping */
+  z-index: 10; /* Ensure text appears on top */
 }
 
 .score-display {

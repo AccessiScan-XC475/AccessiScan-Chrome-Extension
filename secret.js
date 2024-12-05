@@ -10,9 +10,10 @@ export function getSecret() {
 export function setSecret(secret) {
   localStorage.setItem(SECRET_KEY, secret);
   if (secret) {
-    signedInElement.innerText = "Signed In";
+    signedInElement.style.visibility = "hidden";
     signOutButton.style.visibility = "visible";
   } else {
+    signedInElement.style.visibility = "visible";
     signedInElement.innerText = "Not Signed In";
     signOutButton.style.visibility = "hidden";
   }
@@ -22,7 +23,7 @@ export function setSecret(secret) {
 document.addEventListener("DOMContentLoaded", () => {
   const savedValue = getSecret();
   if (savedValue) {
-    signedInElement.innerText = "Signed In";
+    signedInElement.style.visibility = "hidden";
     signOutButton.style.visibility = "visible";
   } else {
     signedInElement.innerText = "Not Signed In";
