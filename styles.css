@@ -98,11 +98,11 @@ button {
 /* Styling for scan button */
 #clear-button {
   position: absolute;
-  top: 10px;
-  right: 8px;
+  top: 14px;
+  right: 14px;
   z-index: 100;
-  color: #1b6aaa;
-  border-color: #1b6aaa;
+  color: black;
+  border-color: #9b8bf4;
   background: none;
   font-size: 16px;
   width: auto;
@@ -113,8 +113,31 @@ button {
 /* Setting hover color for scan button */
 #clear-button:hover {
   color: white;
-  border-color: #1b6aaa;
-  background-color: #1b6aaa;
+  border-color: #9b8bf4;
+  background-color: #9b8bf4;
+}
+
+#sign-out-button {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  z-index: 100;
+  color: black;
+  border-color: #9b8bf4;
+  background: none;
+  font-size: 16px;
+  width: auto;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#sign-out-button:hover {
+  color: white;
+  border-color: #9b8bf4;
+  background-color: #9b8bf4;
 }
 
 .score-display {
