@@ -107,7 +107,7 @@ button {
   font-size: 16px;
   width: auto;
   cursor: pointer;
-  border-radius: 20px;
+  border-radius: 15px;
   transition: background-color 0.15s ease, color 0.15s ease;
 }
 /* Setting hover color for scan button */
@@ -128,7 +128,7 @@ button {
   font-size: 16px;
   width: auto;
   cursor: pointer;
-  border-radius: 20px;
+  border-radius: 15px;
   transition: background-color 0.15s ease, color 0.15s ease;
   padding-left: 10px;
   padding-right: 10px;
