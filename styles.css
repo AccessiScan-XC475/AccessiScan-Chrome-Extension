@@ -88,6 +88,13 @@ button {
   border-color: #9b8bf4;
 }
 
+/* Change info icon color when the selection button is hovered */
+.selection-button:hover .info-icon {
+  background-color: #ffffff;
+  color: #9b8bf4; 
+  border-color: #9b8bf4;
+}
+
 /* Selected state for selection buttons */
 .selection-button.selected {
   background-color: #9b8bf4;
