@@ -15,23 +15,29 @@
     <link href="styles.css" rel="stylesheet" />
   </head>
   <body style="background-color: white; border: 3px solid #90d8b2">
-    <div style="position: absolute; top: 15px; left: 15px; padding: 10px">
+    <div style="position: absolute; top: 15px; left: 15px; padding: 10px; display: flex; flex-direction: column; align-items: center; text-align: center">
       <img
         src="github-mark.png"
         alt="GitHub Login"
         id="github-login-icon"
-        style="width: 40px; height: 40px; cursor: pointer; display: none"
+        style="width: 45px; height: 45px; cursor: pointer; display: none; border-radius: 50%"
       />
+      <p id="sign-in" style="margin: 0; font-size: 16px;">Sign in</p>
     </div>
     <main>
       <div style="text-align: center; margin-top: 10px">
-        <button id="clear-button">reset highlights</button>
+        <button id="clear-button">Reset Highlights</button>
       </div>
-      <img
-        src="updated_logo_vertical.png"
-        alt="AccessiScan Logo"
-        style="width: 150px; display: block; margin: 0 auto"
-      />
+      <div style="text-align: center;">
+        <a href="https://accessiscan.vercel.app" target="_blank" style="display: inline-block;">
+          <img
+            src="updated_logo_vertical.png"
+            id="accessiscan-logo"
+            alt="AccessiScan Logo"
+            style="width: 150px; cursor: pointer;"
+          />
+        </a>
+      </div>      
       <h2><b>Scan my project for...</b></h2>
       <!-- Selection Buttons -->
       <div>
@@ -78,10 +84,6 @@
             </button>
           </div>
         </div>
-
-        <div>
-          <p id="signed-in"></p>
-        </div>
         <div
           id="loading-text"
           style="
@@ -111,7 +113,7 @@
       <div id="score-container"></div>
       <div
         id="accessiscan-link"
-        style="text-align: center; margin-top: 10px; visibility: hidden"
+        style="text-align: center; margin-top: 10px; visibility: hidden; margin-bottom: 30px"
       >
         <a
           href="https://accessiscan.vercel.app/resources"
@@ -121,7 +123,12 @@
           Click here to learn more about improving accessibility
         </a>
       </div>
-      <button id="sign-out-button" style="visibility: hidden">Sign Out</button>
+      <button 
+        id="sign-out-button" 
+        style="visibility: hidden"
+      >
+        Sign Out
+      </button>
     </main>
     <script src="utils/confetti.js"></script>
     <script type="module" src="scan.mjs"></script>
