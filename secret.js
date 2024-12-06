@@ -1,7 +1,7 @@
 import { WEBSITE } from "./domain.js";
 const SECRET_KEY = "SECRET";
 
-const signedInElement = document.getElementById("signed-in");
+const signIn = document.getElementById("sign-in");
 const signOutButton = document.getElementById("sign-out-button");
 const loginButton = document.getElementById("github-login-icon");
 const ghIcon = document.getElementById("github-login-icon").src;
@@ -13,7 +13,7 @@ export function getSecret() {
 export function setSecret(secret) {
   localStorage.setItem(SECRET_KEY, secret);
   if (secret) {
-    signedInElement.style.visibility = "hidden";
+    signIn.style.visibility = "hidden";
     signOutButton.style.visibility = "visible";
     fetch(`${WEBSITE}/api/picture/github?secret=${secret}`, {
       credentials: "omit",
@@ -35,8 +35,7 @@ export function setSecret(secret) {
     });
   } else {
     loginButton.src = ghIcon;
-    signedInElement.style.visibility = "visible";
-    signedInElement.innerText = "Not Signed In";
+    signIn.style.visibility = "visible";
     signOutButton.style.visibility = "hidden";
   }
 }
@@ -46,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const savedValue = getSecret();
   console.log("savedValue:", savedValue);
   if (savedValue) {
-    signedInElement.style.visibility = "hidden";
+    signIn.style.visibility = "hidden";
     signOutButton.style.visibility = "visible";
     fetch(`${WEBSITE}/api/picture/github?secret=${savedValue}`, {
       credentials: "omit",
@@ -67,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error fetching profile picture:", error); // Handle errors
     });  
   } else {
-    signedInElement.innerText = "Not Signed In";
+    signIn.style.visibility = "visible";
     signOutButton.style.visibility = "hidden";
   }
 });
