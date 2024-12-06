@@ -118,6 +118,7 @@ button {
 }
 
 #sign-out-button {
+  position: relative;
   margin-top: auto;
   margin-bottom: -10px;
   margin-left: -10px;
