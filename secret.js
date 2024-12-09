@@ -62,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
           })
           .catch((error) => {
             console.error("Error fetching profile picture:", error); // Handle errors
+            setSecret("");
           });
       } else {
         signIn.style.visibility = "visible";
