@@ -6,7 +6,7 @@ import {
 } from "./utils/highlight.js";
 import { createScoreGradient, displayScoreMessage } from "./utils/score.js";
 import { SCANNER, WEBSITE } from "./domain.js";
-import { setSecret, getSecret } from "./secret.js";
+import { setSecret } from "./secret.js";
 
 let selection = "";
 
@@ -189,34 +189,41 @@ function performScan(scanType, overwrite = true) {
             console.error(e);
           });
 
-          fetch(`${SCANNER}${apiEndpoint}`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              dom,
-              css,
-              secret: getSecret(),
-              href,
-            }),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              hideLoading();
+          chrome.storage.local
+            .get(["secret"])
+            .then((res) => res.secret)
+            .then((secret) => {
+              fetch(`${SCANNER}${apiEndpoint}`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  dom,
+                  css,
+                  secret: secret,
+                  href,
+                }),
+              })
+                .then((res) => res.json())
+                .then((data) => {
+                  hideLoading();
 
-              let score = "N/A";
-              if (scanType === "Labeled Images") {
-                score = `${data.images_with_alt}/${data.total_images}`;
-              } else {
-                score = `${data.score}%`;
-              }
-              const scoreDisplay = `<p class="score-display">${scanType}: <span class="score">${score}</span></p>`;
+                  let score = "N/A";
+                  if (scanType === "Labeled Images") {
+                    score = `${data.images_with_alt}/${data.total_images}`;
+                  } else {
+                    score = `${data.score}%`;
+                  }
+                  const scoreDisplay = `<p class="score-display">${scanType}: <span class="score">${score}</span></p>`;
 
-              const gradientElement = createScoreGradient(data.score);
-              const scoreMessageElement = displayScoreMessage(scanType, data);
+                  const gradientElement = createScoreGradient(data.score);
+                  const scoreMessageElement = displayScoreMessage(
+                    scanType,
+                    data,
+                  );
 
-              const newScoreElement = `
+                  const newScoreElement = `
                 <div>
                   ${scoreDisplay}
                   ${gradientElement}
@@ -224,42 +231,47 @@ function performScan(scanType, overwrite = true) {
                 </div>
               `;
 
-              if (overwrite) {
-                console.log("overwriting");
-                document.getElementById("score-container").innerHTML =
-                  newScoreElement;
-              } else {
-                console.log("appending", scoreMessageElement);
-                document.getElementById("score-container").innerHTML +=
-                  newScoreElement;
-              }
+                  if (overwrite) {
+                    console.log("overwriting");
+                    document.getElementById("score-container").innerHTML =
+                      newScoreElement;
+                  } else {
+                    console.log("appending", scoreMessageElement);
+                    document.getElementById("score-container").innerHTML +=
+                      newScoreElement;
+                  }
 
-              // Show the clear button
-              document.getElementById("clear-button").style.display = "block";
+                  // Show the clear button
+                  document.getElementById("clear-button").style.display =
+                    "block";
 
-              // Make the AccessiScan link visible
-              document.getElementById("accessiscan-link").style.visibility =
-                "visible";
+                  // Make the AccessiScan link visible
+                  document.getElementById("accessiscan-link").style.visibility =
+                    "visible";
 
-              console.log("Score:", data.score);
-              console.log("Inaccessible elements:", data.inaccessible_elements);
+                  console.log("Score:", data.score);
+                  console.log(
+                    "Inaccessible elements:",
+                    data.inaccessible_elements,
+                  );
 
-              if (
-                scanType == "Contrasting Colors" ||
-                scanType == "Large Text" ||
-                scanType == "Labeled Images" ||
-                scanType == "Line Spacing"
-              ) {
-                chrome.scripting.executeScript({
-                  target: { tabId: activeTab.id },
-                  function: highlightInaccessibleElements,
-                  args: [data.inaccessible_elements], // Pass inaccessible elements to the function
+                  if (
+                    scanType == "Contrasting Colors" ||
+                    scanType == "Large Text" ||
+                    scanType == "Labeled Images" ||
+                    scanType == "Line Spacing"
+                  ) {
+                    chrome.scripting.executeScript({
+                      target: { tabId: activeTab.id },
+                      function: highlightInaccessibleElements,
+                      args: [data.inaccessible_elements], // Pass inaccessible elements to the function
+                    });
+                  }
+                })
+                .catch((err) => {
+                  console.error("Could not call scanner.");
+                  console.error(err);
                 });
-              }
-            })
-            .catch((err) => {
-              console.error("Could not call scanner.");
-              console.error(err);
             });
         }
       },
